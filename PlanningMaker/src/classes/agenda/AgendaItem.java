@@ -18,12 +18,16 @@ public class AgendaItem implements Serializable {
 
     private int id;
     private String naam;
+    private String beschrijving;
     private Date eindTijd;
     private List<Account> genodigden;
     private List<Comment> comments;
 
-    public AgendaItem() {
-
+    public AgendaItem(int id, String naam, String beschrijving, Date eindTijd) {
+        this.id = id;
+        this.naam = naam;
+        this.beschrijving = beschrijving;
+        this.eindTijd = eindTijd;
     }
 
     public int getId() {
@@ -36,6 +40,14 @@ public class AgendaItem implements Serializable {
 
     public void setNaam(String naam) {
         this.naam = naam;
+    }
+    
+    public String getBeschrijving() {
+        return beschrijving;
+    }
+
+    public void setBeschrijving(String beschrijving) {
+        this.beschrijving = beschrijving;
     }
 
     public Date getEindTijd() {

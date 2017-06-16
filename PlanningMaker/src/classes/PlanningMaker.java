@@ -8,6 +8,10 @@ package classes;
 import classes.agenda.Agenda;
 import classes.agenda.AgendaItem;
 import classes.agenda.Comment;
+import database.AccountConnection;
+import database.AgendaConnection;
+import database.AgendaItemConnection;
+import database.Connection;
 import interfaces.IAgenda;
 import interfaces.ILoggedIn;
 import interfaces.IVisitor;
@@ -15,6 +19,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,7 +31,14 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
     private Date huidigeDatumEnTijd;
     private List<Account> ingelogdeGebruikers;
 
+    private AccountConnection accountConn;
+    private AgendaConnection agendaConn;
+    private AgendaItemConnection agendaItemConn;
+
     public PlanningMaker() throws RemoteException {
+        accountConn = new AccountConnection();
+        agendaConn = new AgendaConnection();
+        agendaItemConn = new AgendaItemConnection();
     }
 
     /**
@@ -49,19 +62,54 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
     //ILoggedIn methodes
     @Override
     public void logout(int gebruikersId) throws RemoteException {
-        for (Account account : ingelogdeGebruikers) {
-            if (account.getId() == gebruikersId) {
-                ingelogdeGebruikers.remove(account);
-            }
-        }
+//        for (Account account : ingelogdeGebruikers) {
+//            if (account.getId() == gebruikersId) {
+//                System.out.println("Gebruiker: " + account.getGebruikersnaam() + " is succesvol uitgelogd.");
+//                ingelogdeGebruikers.remove(account);
+//            }
+//        }
+        System.out.println("logout");
     }
 
     @Override
-    public Agenda getPriveAgenda(int gebruikersId) throws RemoteException {
-        //get agenda from database
-        //select agendaid from priveagendas where gebruikersid = 1
-        //select * from agenda where agendaid = agendaid
-        return null;
+    public Agenda getPriveAgenda(int agendaid) throws RemoteException {
+        Agenda agenda = null;
+
+        //priveagenda ophalen uit de database 
+        try {
+            if (agendaid != 0) {
+                //ophalen van de agenda
+                Agenda priveAgenda = agendaConn.getPriveAgenda(agendaid);
+                if (priveAgenda != null) {
+                    agenda = priveAgenda;
+                    System.out.println("Prive agenda met id: " + agendaid + " succesvol opgehaald uit de database");
+                } else {
+                    System.out.println("Agenda met id: " + agendaid + " kon niet worden ingeladen.");
+                    return null;
+                }
+            } else {
+                System.out.println("Priveagenda met id: " + agendaid + " bestaat niet");
+                return null;
+            }
+        } catch (Exception ex) {
+            System.out.println("Het ophalen van de agenda met id: " + agendaid + " is mislukt");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+
+        //toevoegen van de agenda items
+        try {
+            List<AgendaItem> items = agendaItemConn.getAgendaItems(agenda.getId());
+            agenda.addAgendaItems(items);
+            System.out.println("Agenda items voor agenda met id: " + agendaid + " succesvol toegevoegd aan de agenda");
+        } catch (Exception ex) {
+            System.out.println("Het toevoegen van agendaitems voor de agenda met id: " + agendaid + " is mislukt");
+            System.out.println(ex.getMessage());
+            Logger.getLogger(PlanningMaker.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
+        return agenda;
     }
 
     @Override
@@ -107,8 +155,21 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
     }
 
     @Override
-    public int getGebruikersId(String gebruikersnaam, String wachtwoord) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Account getGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException {
+        Account account = null;
+
+        //account ophalen uit de database
+        try {
+            account = accountConn.getAccount(gebruikersnaam, wachtwoord);
+            System.out.println("Gebruiker: " + account.getGebruikersnaam() + " succesvol opgehaald uit de database ");
+        } catch (Exception ex) {
+            System.out.println("Het ophalen van gebruiker: " + gebruikersnaam + " is mislukt");
+            System.out.println(ex.getMessage());
+            return null;
+        }
+
+        System.out.println("Gebruiker: " + account.getGebruikersnaam() + " is succesvol ingelogd");
+        return account;
     }
 
     @Override

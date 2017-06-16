@@ -19,7 +19,7 @@ public interface ILoggedIn extends Remote{
     
     void logout(int gebruikersId) throws RemoteException;
     
-    Agenda getPriveAgenda(int gebruikersId) throws RemoteException;
+    Agenda getPriveAgenda(int agendaid) throws RemoteException;
     
     boolean agendaItemToevoegen(AgendaItem item) throws RemoteException;
     

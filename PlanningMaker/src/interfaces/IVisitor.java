@@ -5,6 +5,7 @@
  */
 package interfaces;
 
+import classes.Account;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -31,7 +32,7 @@ public interface IVisitor extends Remote {
      * @return het gebruikers id van het bijbehorende account, 0 indien het account niet bestaat of de gegevens incorrect zijn
      * @throws RemoteException 
      */
-    int getGebruikersId(String gebruikersnaam, String wachtwoord) throws RemoteException;
+    Account getGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException;
     
     /**
      * 

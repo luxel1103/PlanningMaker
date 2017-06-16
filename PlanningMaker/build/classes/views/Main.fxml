@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+   <children>
+      <Button fx:id="btTest" layoutX="135.0" layoutY="314.0" mnemonicParsing="false" onAction="#button" text="todo" />
+      <Label fx:id="lblError" layoutX="51.0" layoutY="360.0" prefHeight="17.0" prefWidth="515.0" textFill="#ff0707" />
+      <Button fx:id="btnAddTaak" layoutX="241.0" layoutY="314.0" mnemonicParsing="false" onAction="#addTaak" text="Taak toevoegen" />
+      <Button fx:id="btnAddEvent" layoutX="375.0" layoutY="314.0" mnemonicParsing="false" onAction="#addEvent" text="Event toevoegen" />
+   </children>
+</AnchorPane>

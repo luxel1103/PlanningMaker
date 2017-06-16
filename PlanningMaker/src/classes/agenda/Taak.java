@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Taak extends AgendaItem {
 
-    public Taak() {
-        super();
+    public Taak(int id, String naam, String beschrijving, Date eindTijd) {
+        super(id, naam, beschrijving, eindTijd);
     }
 }

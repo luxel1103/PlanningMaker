@@ -16,8 +16,8 @@ public class PriveAgenda extends Agenda {
     private List<Agenda> gedeeldeAgendas;
     
 
-    public PriveAgenda() {
-        super();
+    public PriveAgenda(int id) {
+        super(id);
     }
     
 }

@@ -19,8 +19,8 @@ public class GedeeldeAgenda extends Agenda {
     private List<Account> ledenMetRechten;
     
 
-    public GedeeldeAgenda() {
-        super();
+    public GedeeldeAgenda(int id) {
+        super(id);
     }
     
 }

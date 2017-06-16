@@ -29,13 +29,11 @@ public class PlanningMakerClient extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Welcome.fxml"));
         Parent root = loader.load();
-        primaryStage.getIcons().add(new Image("/Icon/scale.png"));
-
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.setScene(new Scene(root,Color.TRANSPARENT));
-        //primaryStage.setTitle("Grand Exchange-Login");
+        primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.setScene(new Scene(root,Color.DARKMAGENTA));
+        primaryStage.setTitle("Planning Maker");
         primaryStage.show();
     }
 

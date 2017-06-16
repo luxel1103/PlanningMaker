@@ -15,7 +15,16 @@ public class Event extends AgendaItem {
 
     private Date beginTijd;
 
-    public Event() {
-        super();
+    public Event(int id, String naam, String beschrijving, Date beginTijd, Date eindTijd) {
+        super(id, naam, beschrijving, eindTijd);
+        this.beginTijd = beginTijd;
+    }
+    
+    public void setBeginTijd(Date beginTijd){
+        this.beginTijd = beginTijd;
+    }
+    
+    public Date getBeginTijd(){
+        return beginTijd;
     }
 }

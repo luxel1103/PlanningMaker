@@ -16,12 +16,18 @@ import java.util.List;
 public class Account implements Serializable {
 
     private int id;
+    private int priveAgendaId;
+
     private String gebruikersnaam;
     private String wachtwoord;
     private Agenda priveAgenda;
     private List<Agenda> gedeeldeAgendas;
 
-    public Account() {
+    public Account(int id, int priveAgendaId, String gebruikersnaam, String wachtwoord) {
+        this.id = id;
+        this.priveAgendaId = priveAgendaId;
+        this.gebruikersnaam = gebruikersnaam;
+        this.wachtwoord = wachtwoord;
     }
 
     /**
@@ -31,6 +37,14 @@ public class Account implements Serializable {
      */
     public int getId() {
         return id;
+    }
+    
+    public int getPriveAgendaId() {
+        return priveAgendaId;
+    }
+
+    public void setPriveAgendaId(int priveAgendaId) {
+        this.priveAgendaId = priveAgendaId;
     }
 
     /**

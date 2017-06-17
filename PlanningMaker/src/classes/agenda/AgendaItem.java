@@ -87,4 +87,6 @@ public class AgendaItem implements Serializable {
         comments.add(comment);
     }
 
+    
+    
 }

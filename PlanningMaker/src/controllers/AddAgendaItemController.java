@@ -5,9 +5,14 @@
  */
 package controllers;
 
+import classes.agenda.AgendaItem;
+import classes.agenda.Taak;
 import interfaces.ILoggedIn;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,36 +44,85 @@ public class AddAgendaItemController implements Initializable {
     private TextArea tbBeschrijving;
     @FXML
     private DatePicker dtpBeginTijd;
-    @FXML 
+    @FXML
     private DatePicker dtpEindTijd;
-    
+    @FXML
+    private TextField tbBeginTijdUur;
+    @FXML
+    private TextField tbBeginTijdMinuut;
+    @FXML
+    private TextField tbEindTijdUur;
+    @FXML
+    private TextField tbEindTijdMinuut;
+    @FXML
+    private Label lblEventLabel1;
+    @FXML
+    private Label lblEventLabel2;
 
     private RegistryManager RM;
     private ILoggedIn loggedin;
     private String type;
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
     }
-    
+
     public void setUp(RegistryManager RM, String type) throws RemoteException {
         this.RM = RM;
         this.loggedin = RM.getLoggedIn();
         this.type = type;
-        if(type.equals("taak")){
+        if (type.equals("taak")) {
             lblToevoegen.setText("Taak toevoegen");
             lblBeginTijd.setVisible(false);
             dtpBeginTijd.setVisible(false);
-        }else{
+            tbBeginTijdUur.setVisible(false);
+            tbBeginTijdMinuut.setVisible(false);
+            lblEventLabel1.setVisible(false);
+            lblEventLabel2.setVisible(false);
+        } else {
             lblToevoegen.setText("Event toevoegen");
         }
     }
-    
-    public void addAgendaItem(){
+
+    public void addAgendaItem() throws ParseException, RemoteException {
+        int agendaId = RM.getAccount().getPriveAgendaId();
+        AgendaItem nieuwItem = null;
+        if (type.equals("taak")) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+            String eindTijdJaar = Integer.toString(dtpEindTijd.getValue().getYear());
+            String eindTijdMaand = Integer.toString(dtpEindTijd.getValue().getMonthValue());
+            String eindTijdDag = Integer.toString(dtpEindTijd.getValue().getDayOfMonth());
+            String eindTijdUur = tbEindTijdUur.getText();
+            String eindTijdMinuut = tbEindTijdMinuut.getText();
+            String dateInString = eindTijdDag +"-"+eindTijdMaand+"-"+eindTijdJaar+" "+eindTijdUur+":"+eindTijdMinuut+":00";
+            Date eindtijd = sdf.parse(dateInString);
+            loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), null, eindtijd, type);
+        } else {
+            SimpleDateFormat sdfBegin = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+            String beginTijdJaar = Integer.toString(dtpBeginTijd.getValue().getYear());
+            String beginTijdMaand = Integer.toString(dtpBeginTijd.getValue().getMonthValue());
+            String beginTijdDag = Integer.toString(dtpBeginTijd.getValue().getDayOfMonth());
+            String beginTijdUur = tbBeginTijdUur.getText();
+            String beginTijdMinuut = tbBeginTijdMinuut.getText();
+            String dateInStringBegin = beginTijdDag +"-"+beginTijdMaand+"-"+beginTijdJaar+" "+beginTijdUur+":"+beginTijdMinuut+":00";
+            Date begintijd = sdfBegin.parse(dateInStringBegin);
+            
+            SimpleDateFormat sdfEind = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+            String eindTijdJaar = Integer.toString(dtpEindTijd.getValue().getYear());
+            String eindTijdMaand = Integer.toString(dtpEindTijd.getValue().getMonthValue());
+            String eindTijdDag = Integer.toString(dtpEindTijd.getValue().getDayOfMonth());
+            String eindTijdUur = tbEindTijdUur.getText();
+            String eindTijdMinuut = tbEindTijdMinuut.getText();
+            String dateInStringEind = eindTijdDag +"-"+eindTijdMaand+"-"+eindTijdJaar+" "+eindTijdUur+":"+eindTijdMinuut+":00";
+            Date eindtijd = sdfEind.parse(dateInStringEind);
+            
+            loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), begintijd, eindtijd, type);
+        }
         System.out.println(tbNaam.getText());
         System.out.println(tbBeschrijving.getText());
         System.out.println(dtpBeginTijd.getValue());

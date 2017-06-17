@@ -8,12 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="391.0" prefWidth="461.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="controllers.AddAgendaItemController">
+<AnchorPane id="AnchorPane" prefHeight="391.0" prefWidth="461.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AddAgendaItemController">
    <children>
       <TextField fx:id="tbNaam" layoutX="112.0" layoutY="56.0" prefHeight="25.0" prefWidth="283.0" />
-      <DatePicker fx:id="dtpBeginTijd" layoutX="112.0" layoutY="224.0" prefHeight="25.0" prefWidth="283.0" />
-      <DatePicker fx:id="dtpEindTijd" layoutX="112.0" layoutY="270.0" prefHeight="25.0" prefWidth="283.0" />
+      <DatePicker fx:id="dtpBeginTijd" layoutX="112.0" layoutY="224.0" prefHeight="25.0" prefWidth="167.0" showWeekNumbers="true" />
+      <DatePicker fx:id="dtpEindTijd" layoutX="112.0" layoutY="270.0" prefHeight="25.0" prefWidth="167.0" />
       <TextArea fx:id="tbBeschrijving" layoutX="112.0" layoutY="104.0" prefHeight="94.0" prefWidth="283.0" />
       <Label layoutX="27.0" layoutY="60.0" text="Naam:" />
       <Label layoutX="29.0" layoutY="143.0" text="Beschrijving:" />
@@ -26,5 +25,13 @@
          </font>
       </Label>
       <Label fx:id="lblError" layoutX="31.0" layoutY="360.0" textFill="RED" />
+      <TextField fx:id="tbBeginTijdUur" layoutX="300.0" layoutY="224.0" prefHeight="25.0" prefWidth="28.0" promptText="12" text="12" />
+      <TextField fx:id="tbEindTijdUur" layoutX="300.0" layoutY="270.0" prefHeight="25.0" prefWidth="28.0" promptText="13" text="13" />
+      <TextField fx:id="tbEindTijdMinuut" layoutX="339.0" layoutY="270.0" prefHeight="25.0" prefWidth="28.0" promptText="00" text="00" />
+      <TextField fx:id="tbBeginTijdMinuut" layoutX="339.0" layoutY="224.0" prefHeight="25.0" prefWidth="28.0" promptText="00" text="00" />
+      <Label fx:id="lblEventLabel1" layoutX="332.0" layoutY="226.0" text=":" />
+      <Label layoutX="331.0" layoutY="271.0" text=":" />
+      <Label fx:id="lblEventLabel2" layoutX="377.0" layoutY="225.0" text="uur" />
+      <Label layoutX="377.0" layoutY="273.0" text="uur" />
    </children>
 </AnchorPane>

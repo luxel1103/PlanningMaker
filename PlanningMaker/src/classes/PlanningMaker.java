@@ -8,6 +8,8 @@ package classes;
 import classes.agenda.Agenda;
 import classes.agenda.AgendaItem;
 import classes.agenda.Comment;
+import classes.agenda.Event;
+import classes.agenda.Taak;
 import database.AccountConnection;
 import database.AgendaConnection;
 import database.AgendaItemConnection;
@@ -113,8 +115,13 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
     }
 
     @Override
-    public boolean agendaItemToevoegen(AgendaItem item) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean agendaItemToevoegen(int agendaId, String naam, String beschrijving, Date begintijd, Date eindtijd, String type) throws RemoteException {
+        if(type.equals("taak")){
+            return agendaConn.insertAgendaItem(agendaId, naam, beschrijving, null, eindtijd);
+        }
+        else{
+            return agendaConn.insertAgendaItem(agendaId, naam, beschrijving, begintijd, eindtijd);
+        }
     }
 
     @Override

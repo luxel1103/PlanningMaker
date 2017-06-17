@@ -89,8 +89,6 @@ public class MainController implements Initializable {
             inputStage.setScene(newScene);
             inputStage.setTitle("Planning Maker - " + RM.getAccount().getGebruikersnaam());
             inputStage.show();
-            Stage stage = (Stage) lblError.getScene().getWindow();
-            stage.close();
         
             lblError.setVisible(true);
             lblError.setText("Kan geen agenda taak toevoegen.");
@@ -107,8 +105,6 @@ public class MainController implements Initializable {
             inputStage.setScene(newScene);
             inputStage.setTitle("Planning Maker - " + RM.getAccount().getGebruikersnaam());
             inputStage.show();
-            Stage stage = (Stage) lblError.getScene().getWindow();
-            stage.close();
         
             lblError.setVisible(true);
             lblError.setText("Kan geen agenda taak toevoegen.");

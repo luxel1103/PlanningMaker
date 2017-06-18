@@ -17,15 +17,18 @@ import java.util.List;
  *
  * @author Lesley Peters
  */
-public class Agenda implements Serializable, ILookAgenda, IAccesAgenda {
+public class Agenda implements Serializable {
 
     private int id;
+    private String naam;
+
     private Date tijdEnDatum;
     private List<AgendaItem> agendaItems;
     private List<AgendaItem> gedeeldeItems;
 
-    public Agenda(int id) {
+    public Agenda(int id, String naam) {
         this.id = id;
+        this.naam = naam;
         agendaItems = new ArrayList<>();
     }
 
@@ -56,27 +59,15 @@ public class Agenda implements Serializable, ILookAgenda, IAccesAgenda {
         this.tijdEnDatum = tijdEnDatum;
     }
 
-    @Override
-    public Agenda agendaInladen(int agendaId) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getNaam() {
+        return naam;
     }
 
-    @Override
-    public boolean agendaOpslaan(Agenda agenda) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setNaam(String naam) {
+        this.naam = naam;
     }
-
-    @Override
-    public boolean addAccount(int gebruikersId) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean removeAccount(int gebruikersId) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
+    
+    
     public boolean addAgendaItem(AgendaItem item) {
         if(item != null){
             this.agendaItems.add(item);
@@ -111,19 +102,6 @@ public class Agenda implements Serializable, ILookAgenda, IAccesAgenda {
         agendaItems.clear();
     }
 
-    @Override
-    public boolean removeAgendaItem(int itemId) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean koppelGebruikerAanItem(int gebruikerId, int itemId) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean ontkoppelGebbruikerVanItem(int gebruikerId, int itemId) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }

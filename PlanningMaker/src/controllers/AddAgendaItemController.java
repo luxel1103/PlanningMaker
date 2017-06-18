@@ -21,6 +21,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import planningmaker.RegistryManager;
 
 /**
@@ -101,7 +102,12 @@ public class AddAgendaItemController implements Initializable {
             String eindTijdMinuut = tbEindTijdMinuut.getText();
             String dateInString = eindTijdDag +"-"+eindTijdMaand+"-"+eindTijdJaar+" "+eindTijdUur+":"+eindTijdMinuut+":00";
             Date eindtijd = sdf.parse(dateInString);
-            loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), null, eindtijd, type);
+            if(loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), null, eindtijd, type)){
+                Stage stage = (Stage) tbNaam.getScene().getWindow();
+                stage.close();
+            }else{
+                lblError.setText("Het is niet gelukt om de taak toe te voegen, probeer het opnieuw.");
+            }
         } else {
             SimpleDateFormat sdfBegin = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
             String beginTijdJaar = Integer.toString(dtpBeginTijd.getValue().getYear());
@@ -120,8 +126,12 @@ public class AddAgendaItemController implements Initializable {
             String eindTijdMinuut = tbEindTijdMinuut.getText();
             String dateInStringEind = eindTijdDag +"-"+eindTijdMaand+"-"+eindTijdJaar+" "+eindTijdUur+":"+eindTijdMinuut+":00";
             Date eindtijd = sdfEind.parse(dateInStringEind);
-            
-            loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), begintijd, eindtijd, type);
+            if(loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), begintijd, eindtijd, type)){
+                Stage stage = (Stage) tbNaam.getScene().getWindow();
+                stage.close();
+            }else{
+                lblError.setText("Het is niet gelukt om het event toe te voegen.");
+            }
         }
         System.out.println(tbNaam.getText());
         System.out.println(tbBeschrijving.getText());

@@ -7,6 +7,7 @@ package classes;
 
 import classes.agenda.Agenda;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class Account implements Serializable {
         this.priveAgendaId = priveAgendaId;
         this.gebruikersnaam = gebruikersnaam;
         this.wachtwoord = wachtwoord;
+        this.gedeeldeAgendas = new ArrayList<>();
     }
 
     /**
@@ -100,6 +102,17 @@ public class Account implements Serializable {
         for(Agenda nieuweAgenda : nieuweAgendas){
             addGedeeldeAgenda(nieuweAgenda);
         }
+    }
+    
+    public void setGedeeldeAgendas(List<Agenda> gedeeldeAgendas){
+        this.gedeeldeAgendas.clear();
+        for(Agenda agenda : gedeeldeAgendas){
+            this.gedeeldeAgendas.add(agenda);
+        }
+    }
+    
+    public List<Agenda> getGedeeldeAgendas(){
+        return this.gedeeldeAgendas;
     }
     
     public void removeGedeeldeAgenda(Agenda agenda){

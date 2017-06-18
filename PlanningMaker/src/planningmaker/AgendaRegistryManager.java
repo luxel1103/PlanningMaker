@@ -1,16 +1,16 @@
 /*
- * This project is for PTS3 Fontys Eindhoven
- * Jorian Vas, Kyle van Raaij, Pieter Beukelman, Sam Dirkx, Lesley Peeters, Robin Welten
- * �2016-2017
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package planningmaker;
 
 import classes.Account;
-import interfaces.IVisitor;
-import interfaces.ILoggedIn;
-import interfaces.IAgenda;
-import interfaces.ILookAgenda;
 import interfaces.IAccesAgenda;
+import interfaces.IAgenda;
+import interfaces.ILoggedIn;
+import interfaces.ILookAgenda;
+import interfaces.IVisitor;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
@@ -24,43 +24,43 @@ import java.util.logging.Logger;
  *
  * @author Lesley Peters
  */
-public class RegistryManager {
-
+public class AgendaRegistryManager {
+    
     //User
     Account account;
 
-    //Interfaces
-    private IVisitor visitor;
-    private ILoggedIn loggedin;
-    private IAgenda agenda;
+    
+    private ILookAgenda lookagenda;
+    private IAccesAgenda accesagenda;
 
     // Set port number
-    private static final int portNumber = 1099;
+    private static int portNumber = 2004;
 
     // Set binding name for Grand Exchange
-    private static final String bindingName = "PlanningMakerServer";
+    private static final String bindingName = "AgendaServer";
 
     // References to registry and Grand Exchange
     private Registry registry = null;
     private InetAddress localhost;
-    private String ipAddress = "localhost";
+    private String ipAddress;
 
-    public RegistryManager() {
-        getLocalHostIp();
+    public AgendaRegistryManager(String ip, int port) {
+        this.ipAddress = ip;
+        this.portNumber = port;
+        //getLocalHostIp();
         setupRegistry();
     }
 
-    public IVisitor getVisitor() {
-        return visitor;
+    
+
+    public ILookAgenda getLookAgenda() {
+        return lookagenda;
     }
 
-    public ILoggedIn getLoggedIn() {
-        return loggedin;
+    public IAccesAgenda getAccesAgenda() {
+        return accesagenda;
     }
 
-    public IAgenda getAgenda() {
-        return agenda;
-    }
     public Account getAccount() {
         return account;
     }
@@ -69,58 +69,40 @@ public class RegistryManager {
         this.account = account;
     }
 
-    public void getVisitorInterface() {
+   
+    public void getLookAgendaInterface() {
         if (registry != null) {
             try {
                 System.out.println("Trying to lookup Visitor Interface...");
-                visitor = (IVisitor) registry.lookup(bindingName);
+                lookagenda = (ILookAgenda) registry.lookup(bindingName);
                 System.out.println("Interface reference IS bound.");
 
-                this.visitor = visitor;
+                this.lookagenda = lookagenda;
 
             } catch (RemoteException | NotBoundException ex) {
                 System.out.println("Client: Cannot bind Visitor interface");
                 System.out.println("Client: RemoteException: " + ex.getMessage());
                 System.out.println("Interface reference is NOT bound");
-                visitor = null;
+                lookagenda = null;
 
             }
         }
     }
 
-    public void getLoggedInInterface() {
+    public void getAccesAgendaInterface() {
         if (registry != null) {
             try {
                 System.out.println("Trying to lookup Visitor Interface...");
-                loggedin = (ILoggedIn) registry.lookup(bindingName);
+                accesagenda = (IAccesAgenda) registry.lookup(bindingName);
                 System.out.println("Interface reference IS bound.");
 
-                this.loggedin = loggedin;
+                this.accesagenda = accesagenda;
 
             } catch (RemoteException | NotBoundException ex) {
                 System.out.println("Client: Cannot bind Visitor interface");
                 System.out.println("Client: RemoteException: " + ex.getMessage());
                 System.out.println("Interface reference is NOT bound");
-                loggedin = null;
-
-            }
-        }
-    }
-
-    public void getAgendaInterface() {
-        if (registry != null) {
-            try {
-                System.out.println("Trying to lookup Visitor Interface...");
-                agenda = (IAgenda) registry.lookup(bindingName);
-                System.out.println("Interface reference IS bound.");
-
-                this.agenda = agenda;
-
-            } catch (RemoteException | NotBoundException ex) {
-                System.out.println("Client: Cannot bind Visitor interface");
-                System.out.println("Client: RemoteException: " + ex.getMessage());
-                System.out.println("Interface reference is NOT bound");
-                agenda = null;
+                accesagenda = null;
 
             }
         }
@@ -155,5 +137,4 @@ public class RegistryManager {
         }
 
     }
-
 }

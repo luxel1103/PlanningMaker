@@ -11,6 +11,7 @@ import classes.agenda.Comment;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -22,9 +23,11 @@ public interface ILoggedIn extends Remote{
     
     Agenda getPriveAgenda(int agendaid) throws RemoteException;
     
+    List<Agenda> getGedeeldeAgendas(int gebruikersid) throws RemoteException;
+    
     boolean agendaItemToevoegen(int agendaId, String naam, String beschrijving, Date begintijd, Date eindtijd, String type) throws RemoteException;
     
     boolean commentToevoegen(int agendaId, Comment comment) throws RemoteException;
     
-    boolean gedeeldeAgendaAanmaken() throws RemoteException;
+    boolean gedeeldeAgendaAanmaken(int gebruikersid, String naam) throws RemoteException;
 }

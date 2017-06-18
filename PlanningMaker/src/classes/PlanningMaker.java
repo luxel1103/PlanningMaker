@@ -19,6 +19,7 @@ import interfaces.ILoggedIn;
 import interfaces.IVisitor;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -81,7 +82,7 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
         try {
             if (agendaid != 0) {
                 //ophalen van de agenda
-                Agenda priveAgenda = agendaConn.getPriveAgenda(agendaid);
+                Agenda priveAgenda = agendaConn.getAgenda(agendaid);
                 if (priveAgenda != null) {
                     agenda = priveAgenda;
                     System.out.println("Prive agenda met id: " + agendaid + " succesvol opgehaald uit de database");
@@ -110,16 +111,71 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
             Logger.getLogger(PlanningMaker.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        
+
         return agenda;
     }
 
     @Override
-    public boolean agendaItemToevoegen(int agendaId, String naam, String beschrijving, Date begintijd, Date eindtijd, String type) throws RemoteException {
-        if(type.equals("taak")){
-            return agendaConn.insertAgendaItem(agendaId, naam, beschrijving, null, eindtijd);
+    public List<Agenda> getGedeeldeAgendas(int gebruikersid) throws RemoteException {
+
+        List<Integer> agendaids = new ArrayList<>();
+        List<Agenda> gedeeldeAgendas = new ArrayList<>();
+        
+
+        //gedeelde agenda ids ophalen uit de database
+        try {
+            agendaids = agendaConn.getGedeeldeAgendaIds(gebruikersid);
+        } catch (Exception ex) {
+            System.out.println("Het ophalen van de gedeelde agenda ids voor gebruiker: " + gebruikersid);
+            System.out.println(ex.getMessage());
+            return null;
         }
-        else{
+
+        //gedeelde agendas ophalen uit de database
+        for (Integer agendaid : agendaids) {
+            Agenda agenda = null;
+            try {
+                if (agendaid != 0) {
+                    //ophalen van de agenda
+                    Agenda gedeeldeAgenda = agendaConn.getAgenda(agendaid);
+                    if (gedeeldeAgenda != null) {
+                        agenda = gedeeldeAgenda;
+                        System.out.println("Gedeelde agenda met id: " + agendaid + " succesvol opgehaald uit de database");
+                    } else {
+                        System.out.println("Agenda met id: " + agendaid + " kon niet worden ingeladen.");
+                        return null;
+                    }
+                } else {
+                    System.out.println("Gedeelde agenda met id: " + agendaid + " bestaat niet");
+                    return null;
+                }
+            } catch (Exception ex) {
+                System.out.println("Het ophalen van de agenda met id: " + agendaid + " is mislukt");
+                System.out.println(ex.getMessage());
+                return null;
+            }
+
+            //toevoegen van de agenda items
+            try {
+                List<AgendaItem> items = agendaItemConn.getAgendaItems(agendaid);
+                agenda.addAgendaItems(items);
+                gedeeldeAgendas.add(agenda);
+                System.out.println("Agenda items voor agenda met id: " + agendaid + " succesvol toegevoegd aan de agenda");
+            } catch (Exception ex) {
+                System.out.println("Het toevoegen van agendaitems voor de agenda met id: " + agendaid + " is mislukt");
+                System.out.println(ex.getMessage());
+                Logger.getLogger(PlanningMaker.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
+        }
+        return gedeeldeAgendas;
+    }
+
+    @Override
+    public boolean agendaItemToevoegen(int agendaId, String naam, String beschrijving, Date begintijd, Date eindtijd, String type) throws RemoteException {
+        if (type.equals("taak")) {
+            return agendaConn.insertAgendaItem(agendaId, naam, beschrijving, null, eindtijd);
+        } else {
             return agendaConn.insertAgendaItem(agendaId, naam, beschrijving, begintijd, eindtijd);
         }
     }
@@ -130,14 +186,54 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
     }
 
     @Override
-    public boolean gedeeldeAgendaAanmaken() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean gedeeldeAgendaAanmaken(int gebruikersid, String naam) throws RemoteException {
+        int agendaid = agendaConn.addGedeeldeAgenda(naam);
+        if (agendaid != 0) {
+            return agendaConn.LidToevoegenAanGedeeldeAgenda(agendaid, gebruikersid, true, true);
+        } else {
+            System.out.println("Agenda is niet toegevoegd");
+            return false;
+        }
     }
 
     //IAgenda methodes
     @Override
-    public Agenda getGedeeldeAgenda(int agendaId) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Agenda getGedeeldeAgenda(int agendaid) throws RemoteException {
+        //gedeelde agenda ophalen uit de database
+            Agenda agenda = null;
+            try {
+                if (agendaid != 0) {
+                    //ophalen van de agenda
+                    Agenda gedeeldeAgenda = agendaConn.getAgenda(agendaid);
+                    if (gedeeldeAgenda != null) {
+                        agenda = gedeeldeAgenda;
+                        System.out.println("Gedeelde agenda met id: " + agendaid + " succesvol opgehaald uit de database");
+                    } else {
+                        System.out.println("Agenda met id: " + agendaid + " kon niet worden ingeladen.");
+                        return null;
+                    }
+                } else {
+                    System.out.println("Gedeelde agenda met id: " + agendaid + " bestaat niet");
+                    return null;
+                }
+            } catch (Exception ex) {
+                System.out.println("Het ophalen van de agenda met id: " + agendaid + " is mislukt");
+                System.out.println(ex.getMessage());
+                return null;
+            }
+
+            //toevoegen van de agenda items
+            try {
+                List<AgendaItem> items = agendaItemConn.getAgendaItems(agendaid);
+                agenda.addAgendaItems(items);
+                System.out.println("Agenda items voor agenda met id: " + agendaid + " succesvol toegevoegd aan de agenda");
+                return agenda;
+            } catch (Exception ex) {
+                System.out.println("Het toevoegen van agendaitems voor de agenda met id: " + agendaid + " is mislukt");
+                System.out.println(ex.getMessage());
+                Logger.getLogger(PlanningMaker.class.getName()).log(Level.SEVERE, null, ex);
+                return null;
+            }
     }
 
     @Override

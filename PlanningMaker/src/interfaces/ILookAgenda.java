@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
  */
 public interface ILookAgenda extends Remote {
 
-    Agenda agendaInladen(int agendaId) throws RemoteException;
+    Agenda agendaInladen() throws RemoteException;
     
     boolean agendaOpslaan(Agenda agenda) throws RemoteException;
 }

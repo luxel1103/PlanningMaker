@@ -6,7 +6,6 @@
 package controllers;
 
 import classes.Account;
-import classes.agenda.Agenda;
 import interfaces.ILoggedIn;
 import planningmaker.RegistryManager;
 import interfaces.IVisitor;
@@ -22,10 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -43,12 +39,11 @@ public class WelcomeController implements Initializable {
     @FXML
     Label lblError;
 
-
     private Account account;
     private RegistryManager RM;
     private IVisitor visitor;
     private ILoggedIn loggedIn;
-    
+
     /**
      * Initializes the controller class.
      */
@@ -57,9 +52,9 @@ public class WelcomeController implements Initializable {
         RM = new RegistryManager();
         RM.getVisitorInterface();
         visitor = RM.getVisitor();
-    }    
-    
-    public void login() throws RemoteException, IOException{
+    }
+
+    public void login() throws RemoteException, IOException {
         try {
             account = visitor.getGebruiker(tbGebruikersnaam.getText(), tbWachtwoord.getText());
             System.out.print(account);
@@ -88,5 +83,5 @@ public class WelcomeController implements Initializable {
             lblError.setText(" Onze poging om je in te loggen is mislukt. Controleer je inloggegevens en probeer het opnieuw.");
         }
     }
-    
+
 }

@@ -28,10 +28,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -40,13 +37,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import planningmaker.AgendaRegistryManager;
 import planningmaker.RegistryManager;
@@ -56,7 +47,7 @@ import planningmaker.RegistryManager;
  *
  * @author Lesley Peters
  */
-public class MainController extends UnicastRemoteObject implements Initializable, IRemotePropertyListener {
+public class MainController implements Initializable {
 
     @FXML
     private Button btTest;
@@ -86,15 +77,11 @@ public class MainController extends UnicastRemoteObject implements Initializable
     private ILoggedIn loggedin;
     private ILookAgenda lookagenda;
 
-    public MainController() throws RemoteException{
-        
-    }
-    
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)  {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
 
@@ -103,7 +90,6 @@ public class MainController extends UnicastRemoteObject implements Initializable
         RM.getLoggedInInterface();
         this.loggedin = RM.getLoggedIn();
         lblWelkom.setText("Welkom: " + RM.getAccount().getGebruikersnaam());
-
 
         updateGui();
 
@@ -157,7 +143,7 @@ public class MainController extends UnicastRemoteObject implements Initializable
                     lblError.setText("");
                 });
             }
-        }, 0, 5000);
+        }, 0, 10000);
     }
 
     public void button() throws RemoteException {
@@ -203,42 +189,36 @@ public class MainController extends UnicastRemoteObject implements Initializable
         }
     }
 
-    public void openGedeeldeAgenda() throws RemoteException, UnknownHostException {
+    public void openGedeeldeAgenda() throws RemoteException, UnknownHostException, IOException, InterruptedException {
         int index = lvGedeeldeAgendas.getSelectionModel().getSelectedIndex();
         Agenda agenda = RM.getAccount().getGedeeldeAgendas().get(index);
         HostInfo host = loggedin.getAgendaHost(agenda.getId());
-        if(host != null){
-            this.ARM = new AgendaRegistryManager(host.getIp(),host.getPortNumber());
-            ARM.getLookAgendaInterface();
-            this.lookagenda = ARM.getLookAgenda();
-            try{
-                Agenda gedeeldeagenda = lookagenda.agendaInladen();
-                lookagenda.subscribe(this, "agenda");
-                System.out.println("Agenda: " + gedeeldeagenda.getNaam() + " ontvangen van de agenda server.");
-            }catch(Exception ex){
-                AgendaServer agendaServer = new AgendaServer(agenda.getId());
-            agendaServer.start();
-            }
+        if (host != null) {
             
-        }else{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GedeeldeAgenda.fxml"));
+        Parent root = loader.load();
+        GedeeldeAgendaController controller = (GedeeldeAgendaController) loader.getController();
+        controller.setUp(RM, host);
+        Stage inputStage = new Stage();
+        Scene newScene = new Scene(root);
+        inputStage.setScene(newScene);
+        inputStage.setTitle("Planning Maker - " + RM.getAccount().getGebruikersnaam());
+        inputStage.show();
+            
+
+
+        } else {
             AgendaServer agendaServer = new AgendaServer(agenda.getId());
             agendaServer.start();
-            //openGedeeldeAgenda();
+            sleep(2000);
+            openGedeeldeAgenda();
         }
-             
-    }
-    
-    public void Connect() throws RemoteException{
-        
+
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-        try {
-            Agenda agenda = (Agenda) evt.getNewValue();
-            System.out.println("Agenda ontvangen van agenda server: " + agenda.getNaam());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+    public void Connect() throws RemoteException {
+
     }
+
+    
 }

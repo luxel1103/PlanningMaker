@@ -8,14 +8,9 @@ package planningmaker;
 import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -25,14 +20,14 @@ import javafx.stage.StageStyle;
  * @author Lesley Peters
  */
 public class PlanningMakerClient extends Application {
-    
+
     @Override
     public void start(Stage primaryStage) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Welcome.fxml"));
         Parent root = loader.load();
         primaryStage.initStyle(StageStyle.DECORATED);
-        primaryStage.setScene(new Scene(root,Color.DARKMAGENTA));
+        primaryStage.setScene(new Scene(root, Color.DARKMAGENTA));
         primaryStage.setTitle("Planning Maker");
         primaryStage.show();
     }
@@ -43,5 +38,5 @@ public class PlanningMakerClient extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

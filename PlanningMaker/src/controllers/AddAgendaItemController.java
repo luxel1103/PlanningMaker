@@ -6,7 +6,6 @@
 package controllers;
 
 import classes.agenda.AgendaItem;
-import classes.agenda.Taak;
 import interfaces.ILoggedIn;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -100,12 +99,12 @@ public class AddAgendaItemController implements Initializable {
             String eindTijdDag = Integer.toString(dtpEindTijd.getValue().getDayOfMonth());
             String eindTijdUur = tbEindTijdUur.getText();
             String eindTijdMinuut = tbEindTijdMinuut.getText();
-            String dateInString = eindTijdDag +"-"+eindTijdMaand+"-"+eindTijdJaar+" "+eindTijdUur+":"+eindTijdMinuut+":00";
+            String dateInString = eindTijdDag + "-" + eindTijdMaand + "-" + eindTijdJaar + " " + eindTijdUur + ":" + eindTijdMinuut + ":00";
             Date eindtijd = sdf.parse(dateInString);
-            if(loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), null, eindtijd, type)){
+            if (loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), null, eindtijd, type)) {
                 Stage stage = (Stage) tbNaam.getScene().getWindow();
                 stage.close();
-            }else{
+            } else {
                 lblError.setText("Het is niet gelukt om de taak toe te voegen, probeer het opnieuw.");
             }
         } else {
@@ -115,21 +114,21 @@ public class AddAgendaItemController implements Initializable {
             String beginTijdDag = Integer.toString(dtpBeginTijd.getValue().getDayOfMonth());
             String beginTijdUur = tbBeginTijdUur.getText();
             String beginTijdMinuut = tbBeginTijdMinuut.getText();
-            String dateInStringBegin = beginTijdDag +"-"+beginTijdMaand+"-"+beginTijdJaar+" "+beginTijdUur+":"+beginTijdMinuut+":00";
+            String dateInStringBegin = beginTijdDag + "-" + beginTijdMaand + "-" + beginTijdJaar + " " + beginTijdUur + ":" + beginTijdMinuut + ":00";
             Date begintijd = sdfBegin.parse(dateInStringBegin);
-            
+
             SimpleDateFormat sdfEind = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
             String eindTijdJaar = Integer.toString(dtpEindTijd.getValue().getYear());
             String eindTijdMaand = Integer.toString(dtpEindTijd.getValue().getMonthValue());
             String eindTijdDag = Integer.toString(dtpEindTijd.getValue().getDayOfMonth());
             String eindTijdUur = tbEindTijdUur.getText();
             String eindTijdMinuut = tbEindTijdMinuut.getText();
-            String dateInStringEind = eindTijdDag +"-"+eindTijdMaand+"-"+eindTijdJaar+" "+eindTijdUur+":"+eindTijdMinuut+":00";
+            String dateInStringEind = eindTijdDag + "-" + eindTijdMaand + "-" + eindTijdJaar + " " + eindTijdUur + ":" + eindTijdMinuut + ":00";
             Date eindtijd = sdfEind.parse(dateInStringEind);
-            if(loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), begintijd, eindtijd, type)){
+            if (loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), begintijd, eindtijd, type)) {
                 Stage stage = (Stage) tbNaam.getScene().getWindow();
                 stage.close();
-            }else{
+            } else {
                 lblError.setText("Het is niet gelukt om het event toe te voegen.");
             }
         }

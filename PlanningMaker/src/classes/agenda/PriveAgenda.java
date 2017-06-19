@@ -14,10 +14,9 @@ import java.util.List;
 public class PriveAgenda extends Agenda {
 
     private List<Agenda> gedeeldeAgendas;
-    
 
     public PriveAgenda(int id, String naam) {
         super(id, naam);
     }
-    
+
 }

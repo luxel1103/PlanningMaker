@@ -5,15 +5,12 @@
  */
 package database;
 
-import classes.agenda.Agenda;
 import classes.agenda.AgendaItem;
 import classes.agenda.Event;
-import classes.agenda.PriveAgenda;
 import classes.agenda.Taak;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

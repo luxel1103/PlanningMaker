@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package planningmaker;
+
 import classes.PlanningMaker;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

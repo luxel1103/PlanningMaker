@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.GedeeldeAgendaController">
+  <children>
+    <Button id="btnGedeeldeAgendaAanmaken" fx:id="btnGebruikerToevoegen" layoutX="505.0" layoutY="328.0" mnemonicParsing="false" onAction="#gebruikerToevoegen" text="Toevoegen" />
+    <Label id="lblError" layoutX="15.0" layoutY="282.0" prefHeight="17.0" prefWidth="568.0" textFill="#ff0707" />
+    <Button fx:id="btnAddTaak" layoutX="14.0" layoutY="239.0" mnemonicParsing="false" onAction="#addTaak" prefHeight="25.0" prefWidth="167.0" text="Taak toevoegen" />
+    <Button fx:id="btnAddEvent" layoutX="215.0" layoutY="239.0" mnemonicParsing="false" onAction="#addEvent" prefHeight="25.0" prefWidth="167.0" text="Event toevoegen" />
+    <ListView id="lvTakenEnEvents" fx:id="lvAgendaItems" layoutX="14.0" layoutY="30.0" prefHeight="200.0" prefWidth="568.0" />
+    <Button fx:id="btnVerwijderItem" layoutX="415.0" layoutY="239.0" mnemonicParsing="false" onAction="#verwijderItem" prefHeight="25.0" prefWidth="167.0" text="Taak/Event verwijderen" />
+    <ListView id="lvGedeeldeAgendas" fx:id="lvLeden" layoutX="16.0" layoutY="324.0" prefHeight="107.0" prefWidth="303.0" />
+    <Label id="lblDatumTijd" fx:id="lblDatumEnTijd" layoutX="479.0" layoutY="14.0" text="18-6-2017 18:21:00" />
+    <TextField id="tbGedeeldeAgendaNaam" fx:id="tbGebruikersnaam" layoutX="344.0" layoutY="327.0" promptText="Gebruikersnaam" />
+    <Label layoutX="16.0" layoutY="306.0" text="Leden:" />
+    <Label id="lblWelkom" fx:id="lblAgendaNaam" layoutX="14.0" layoutY="14.0" text="Gedeelde Agenda" />
+    <Label layoutX="344.0" layoutY="306.0" text="Gebruiker toevoegen:" />
+  </children>
+</AnchorPane>

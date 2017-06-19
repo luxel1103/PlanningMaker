@@ -21,11 +21,7 @@
       <ListView fx:id="lvTakenEnEvents" layoutX="19.0" layoutY="31.0" prefHeight="200.0" prefWidth="568.0" />
       <Button fx:id="btnVerwijderItem" layoutX="420.0" layoutY="242.0" mnemonicParsing="false" onAction="#verwijderItem" prefHeight="25.0" prefWidth="167.0" text="Taak/Event verwijderen" />
       <Label fx:id="lblWelkom" layoutX="19.0" layoutY="14.0" text="Welkom: " />
-      <Label fx:id="lblDatumTijd" layoutX="483.0" layoutY="14.0" text="18-6-2017 18:21:00" textAlignment="RIGHT">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </Label>
+      <Label fx:id="lblDatumTijd" layoutX="483.0" layoutY="14.0" text="18-6-2017 18:21:00" />
       <Label layoutX="23.0" layoutY="306.0" text="Gedeelde agenda' s" />
       <Button layoutX="177.0" layoutY="446.0" mnemonicParsing="false" onAction="#openGedeeldeAgenda" prefHeight="25.0" prefWidth="149.0" text="Verlaat gedeelde agenda" />
       <Button fx:id="btnConnect" layoutX="361.0" layoutY="424.0" mnemonicParsing="false" onAction="#Connect" text="Connect" />

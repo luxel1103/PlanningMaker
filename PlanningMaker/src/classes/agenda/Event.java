@@ -19,12 +19,12 @@ public class Event extends AgendaItem {
         super(id, naam, beschrijving, eindTijd);
         this.beginTijd = beginTijd;
     }
-    
-    public void setBeginTijd(Date beginTijd){
+
+    public void setBeginTijd(Date beginTijd) {
         this.beginTijd = beginTijd;
     }
-    
-    public Date getBeginTijd(){
+
+    public Date getBeginTijd() {
         return beginTijd;
     }
 }

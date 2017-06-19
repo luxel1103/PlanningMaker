@@ -17,10 +17,9 @@ public class GedeeldeAgenda extends Agenda {
     private List<Account> leden;
     private List<Account> uitgenodigden;
     private List<Account> ledenMetRechten;
-    
 
     public GedeeldeAgenda(int id, String naam) {
         super(id, naam);
     }
-    
+
 }

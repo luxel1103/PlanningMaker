@@ -17,8 +17,8 @@ import java.rmi.RemoteException;
 public interface ILookAgenda extends Remote {
 
     Agenda agendaInladen() throws RemoteException;
-    
+
     boolean agendaOpslaan(Agenda agenda) throws RemoteException;
-    
+
     void subscribe(IRemotePropertyListener listener, String property) throws RemoteException;
 }

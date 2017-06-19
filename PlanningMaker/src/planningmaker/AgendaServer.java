@@ -5,7 +5,6 @@
  */
 package planningmaker;
 
-import classes.agenda.Agenda;
 import classes.AgendaHost;
 import classes.HostInfo;
 import java.net.InetAddress;
@@ -15,14 +14,13 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import planningmaker.PlanningMakerServer;
 
 /**
  *
  * @author Lesley Peters
  */
-public class AgendaServer extends Thread{
-    
+public class AgendaServer extends Thread {
+
     // Set port number
     private static int portNumber;
     private int agendaid;
@@ -34,38 +32,36 @@ public class AgendaServer extends Thread{
     private Registry registry = null;
     private AgendaHost agendaHost = null;
     private HostInfo hostInfo = null;
-    
+
     public AgendaServer(int agendaid) throws UnknownHostException {
         this.agendaid = agendaid;
         System.out.println(agendaid);
         int length = String.valueOf(agendaid).length();
         if (length == 1) {
             portNumber = Integer.parseInt("200" + agendaid);
-        }else if(length == 2){
+        } else if (length == 2) {
             portNumber = Integer.parseInt("20" + agendaid);
-        } else{
+        } else {
             String id = Integer.toString(agendaid);
-            portNumber = Integer.parseInt("2"+id.substring(id.length() - 3));
+            portNumber = Integer.parseInt("2" + id.substring(id.length() - 3));
         }
         InetAddress localhost = InetAddress.getLocalHost();
         hostInfo = new HostInfo(agendaid, localhost.getHostAddress(), portNumber);
         // Print port number for registry
         System.out.println("Agenda: Port number " + portNumber);
 
-        
     }
-    
+
     @Override
-    public void run(){
+    public void run() {
         // Create Grand Exchange
-        System.out.println("agendaid = "+agendaid);
+        System.out.println("agendaid = " + agendaid);
         try {
             agendaHost = new AgendaHost(agendaid, hostInfo);
         } catch (RemoteException ex) {
             Logger.getLogger(AgendaServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Agenda: agenda created !");
-        
 
         // Create registry at port number
         try {
@@ -102,8 +98,5 @@ public class AgendaServer extends Thread{
             Logger.getLogger(PlanningMakerServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    
-    
+
 }

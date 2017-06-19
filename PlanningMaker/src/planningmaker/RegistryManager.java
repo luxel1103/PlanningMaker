@@ -9,8 +9,6 @@ import classes.Account;
 import interfaces.IVisitor;
 import interfaces.ILoggedIn;
 import interfaces.IAgenda;
-import interfaces.ILookAgenda;
-import interfaces.IAccesAgenda;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
@@ -61,6 +59,7 @@ public class RegistryManager {
     public IAgenda getAgenda() {
         return agenda;
     }
+
     public Account getAccount() {
         return account;
     }

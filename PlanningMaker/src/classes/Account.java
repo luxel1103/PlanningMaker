@@ -40,7 +40,7 @@ public class Account implements Serializable {
     public int getId() {
         return id;
     }
-    
+
     public int getPriveAgendaId() {
         return priveAgendaId;
     }
@@ -85,37 +85,37 @@ public class Account implements Serializable {
         this.wachtwoord = wachtwoord;
     }
 
-    public void setPriveAgenda(Agenda agenda){
+    public void setPriveAgenda(Agenda agenda) {
         this.priveAgenda = agenda;
     }
-    
-    public Agenda getPriveAgenda(){
+
+    public Agenda getPriveAgenda() {
         return this.priveAgenda;
     }
-    
-    public void addGedeeldeAgenda(Agenda nieuweAgenda){
+
+    public void addGedeeldeAgenda(Agenda nieuweAgenda) {
         this.gedeeldeAgendas.add(priveAgenda);
         //todo: add taken van de gedeelde agenda toe aan de prive agenda
     }
-    
-    public void addGedeeldeAgendas(List<Agenda> nieuweAgendas){
-        for(Agenda nieuweAgenda : nieuweAgendas){
+
+    public void addGedeeldeAgendas(List<Agenda> nieuweAgendas) {
+        for (Agenda nieuweAgenda : nieuweAgendas) {
             addGedeeldeAgenda(nieuweAgenda);
         }
     }
-    
-    public void setGedeeldeAgendas(List<Agenda> gedeeldeAgendas){
+
+    public void setGedeeldeAgendas(List<Agenda> gedeeldeAgendas) {
         this.gedeeldeAgendas.clear();
-        for(Agenda agenda : gedeeldeAgendas){
+        for (Agenda agenda : gedeeldeAgendas) {
             this.gedeeldeAgendas.add(agenda);
         }
     }
-    
-    public List<Agenda> getGedeeldeAgendas(){
+
+    public List<Agenda> getGedeeldeAgendas() {
         return this.gedeeldeAgendas;
     }
-    
-    public void removeGedeeldeAgenda(Agenda agenda){
+
+    public void removeGedeeldeAgenda(Agenda agenda) {
         gedeeldeAgendas.remove(agenda);
     }
 }

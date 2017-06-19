@@ -12,14 +12,14 @@ import java.util.Date;
  *
  * @author Lesley Peters
  */
-public class Comment implements Serializable{
-    
+public class Comment implements Serializable {
+
     private int accountId;
     private int itemId;
     private String bericht;
     private Date verzendDatum;
-    
-    public Comment(){
-        
+
+    public Comment() {
+
     }
 }

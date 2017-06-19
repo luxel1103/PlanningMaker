@@ -7,10 +7,8 @@ package planningmaker;
 
 import classes.Account;
 import interfaces.IAccesAgenda;
-import interfaces.IAgenda;
 import interfaces.ILoggedIn;
 import interfaces.ILookAgenda;
-import interfaces.IVisitor;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
@@ -25,11 +23,10 @@ import java.util.logging.Logger;
  * @author Lesley Peters
  */
 public class AgendaRegistryManager {
-    
+
     //User
     Account account;
 
-    
     private ILookAgenda lookagenda;
     private IAccesAgenda accesagenda;
 
@@ -51,8 +48,6 @@ public class AgendaRegistryManager {
         setupRegistry();
     }
 
-    
-
     public ILookAgenda getLookAgenda() {
         return lookagenda;
     }
@@ -69,7 +64,6 @@ public class AgendaRegistryManager {
         this.account = account;
     }
 
-   
     public void getLookAgendaInterface() {
         if (registry != null) {
             try {

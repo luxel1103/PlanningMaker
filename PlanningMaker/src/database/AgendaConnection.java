@@ -6,11 +6,8 @@
 package database;
 
 import classes.agenda.Agenda;
-import classes.agenda.AgendaItem;
-import classes.agenda.Event;
 import classes.agenda.GedeeldeAgenda;
 import classes.agenda.PriveAgenda;
-import classes.agenda.Taak;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,7 +59,7 @@ public class AgendaConnection {
         try {
             while (myRs.next()) {
                 id = myRs.getInt("agendaid");
-                if(id!=0){
+                if (id != 0) {
                     agendaids.add(id);
                 }
                 id = 0;
@@ -81,7 +78,7 @@ public class AgendaConnection {
 
         return agendaids;
     }
-    
+
     public Agenda getAgenda(int agendaid) {
         Agenda agenda = null;
         try {
@@ -100,10 +97,10 @@ public class AgendaConnection {
             int isgedeeld = myRs.getInt("isgedeeld");
             String naam = myRs.getString("naam");
             if (isgedeeld == 0) {
-                agenda = new PriveAgenda(id,naam);
-            } else if(isgedeeld == 1){
-                agenda = new GedeeldeAgenda(id,naam);
-            } else{
+                agenda = new PriveAgenda(id, naam);
+            } else if (isgedeeld == 1) {
+                agenda = new GedeeldeAgenda(id, naam);
+            } else {
                 agenda = null;
                 System.out.println("Het ophalen van de agenda is mislukt");
             }
@@ -181,15 +178,15 @@ public class AgendaConnection {
             return 0;
         }
     }
-    
+
     public boolean LidToevoegenAanGedeeldeAgenda(int agendaid, int gebruikersid, boolean isEigenaar, boolean heeftRechten) {
         conn.getConnection();
         int istoegevoegd = 1;
         int rechten = 0;
-        if(isEigenaar){
+        if (isEigenaar) {
             istoegevoegd = 1;
         }
-        if(heeftRechten){
+        if (heeftRechten) {
             rechten = 1;
         }
         try {

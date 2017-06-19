@@ -16,14 +16,14 @@ import java.rmi.RemoteException;
  * @author Lesley Peters
  */
 public interface IAgenda extends Remote {
-    
+
     void setAgendaHost(HostInfo host) throws RemoteException;
-    
+
     Agenda getGedeeldeAgenda(int agendaId) throws RemoteException;
-    
+
     boolean addComment(int agendaId, Comment comment) throws RemoteException;
-    
+
     boolean removeComment(Comment comment) throws RemoteException;
-    
+
     boolean verlaatAgenda(int gebruikersId, int agendaId) throws RemoteException;
 }

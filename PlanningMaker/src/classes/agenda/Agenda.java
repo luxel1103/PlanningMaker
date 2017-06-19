@@ -5,10 +5,7 @@
  */
 package classes.agenda;
 
-import interfaces.IAccesAgenda;
-import interfaces.ILookAgenda;
 import java.io.Serializable;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,14 +63,12 @@ public class Agenda implements Serializable {
     public void setNaam(String naam) {
         this.naam = naam;
     }
-    
-    
+
     public boolean addAgendaItem(AgendaItem item) {
-        if(item != null){
+        if (item != null) {
             this.agendaItems.add(item);
             return true;
-        }
-        else{
+        } else {
             System.out.println("Agenda item is null en kan niet aan de lijst worden toegevoegd.");
             return false;
         }
@@ -81,27 +76,24 @@ public class Agenda implements Serializable {
 
     public void addAgendaItems(List<AgendaItem> items) {
         for (AgendaItem item : items) {
-            if(item != null){
+            if (item != null) {
                 this.agendaItems.add(item);
-            }
-            else{
+            } else {
                 System.out.println("Agenda item is null en kan niet aan de lijst worden toegevoegd.");
             }
         }
     }
-    
-    public List<AgendaItem> getAgendaItems(){
+
+    public List<AgendaItem> getAgendaItems() {
         return agendaItems;
     }
 
     public void removeAgendaItem(AgendaItem item) {
         agendaItems.remove(item);
     }
-    
-    public void removeAlleAgendaItems(){
+
+    public void removeAlleAgendaItems() {
         agendaItems.clear();
     }
-
-    
 
 }

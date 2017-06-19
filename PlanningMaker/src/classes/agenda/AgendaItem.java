@@ -41,7 +41,7 @@ public class AgendaItem implements Serializable {
     public void setNaam(String naam) {
         this.naam = naam;
     }
-    
+
     public String getBeschrijving() {
         return beschrijving;
     }
@@ -87,6 +87,4 @@ public class AgendaItem implements Serializable {
         comments.add(comment);
     }
 
-    
-    
 }

@@ -5,6 +5,7 @@
  */
 package interfaces;
 
+import classes.HostInfo;
 import classes.agenda.Agenda;
 import classes.agenda.AgendaItem;
 import classes.agenda.Comment;
@@ -30,4 +31,7 @@ public interface ILoggedIn extends Remote{
     boolean commentToevoegen(int agendaId, Comment comment) throws RemoteException;
     
     boolean gedeeldeAgendaAanmaken(int gebruikersid, String naam) throws RemoteException;
+    
+    HostInfo getAgendaHost(int agendaId) throws RemoteException; 
+    
 }

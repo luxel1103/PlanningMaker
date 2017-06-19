@@ -7,6 +7,8 @@ package classes;
 
 import classes.agenda.Agenda;
 import classes.agenda.AgendaItem;
+import fontyspublisher.IRemotePropertyListener;
+import fontyspublisher.RemotePublisher;
 import interfaces.IAccesAgenda;
 import interfaces.IAgenda;
 import interfaces.ILookAgenda;
@@ -25,11 +27,20 @@ public class AgendaHost extends UnicastRemoteObject implements ILookAgenda, IAcc
     RegistryManager RM;
     IAgenda agendaInterface;
     Agenda agenda;
+    HostInfo hostInfo;
     
-    public AgendaHost(int agendaid) throws RemoteException{
+    RemotePublisher rp;
+    
+    public AgendaHost(int agendaid, HostInfo hostInfo) throws RemoteException{
+        rp = new RemotePublisher();
+        rp.registerProperty("agenda");
+        
+        
         RM = new RegistryManager();
         RM.getAgendaInterface();
+        this.hostInfo = hostInfo;
         agendaInterface = RM.getAgenda();
+        agendaInterface.setAgendaHost(hostInfo);
         Agenda nieuweagenda = agendaInterface.getGedeeldeAgenda(agendaid);
         if(nieuweagenda != null){
             agenda = nieuweagenda;
@@ -41,6 +52,8 @@ public class AgendaHost extends UnicastRemoteObject implements ILookAgenda, IAcc
 
     @Override
     public Agenda agendaInladen() throws RemoteException {
+        
+        rp.inform("agenda", null, this.agenda);
         return this.agenda;
     }
 
@@ -77,5 +90,10 @@ public class AgendaHost extends UnicastRemoteObject implements ILookAgenda, IAcc
     @Override
     public boolean ontkoppelGebbruikerVanItem(int gebruikerId, int itemId) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void subscribe(IRemotePropertyListener listener, String property) throws RemoteException {
+        rp.subscribeRemoteListener(listener, property);
     }
 }

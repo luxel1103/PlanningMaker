@@ -5,6 +5,7 @@
  */
 package interfaces;
 
+import classes.HostInfo;
 import classes.agenda.Agenda;
 import classes.agenda.Comment;
 import java.rmi.Remote;
@@ -15,6 +16,8 @@ import java.rmi.RemoteException;
  * @author Lesley Peters
  */
 public interface IAgenda extends Remote {
+    
+    void setAgendaHost(HostInfo host) throws RemoteException;
     
     Agenda getGedeeldeAgenda(int agendaId) throws RemoteException;
     

@@ -33,6 +33,7 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
 
     private Date huidigeDatumEnTijd;
     private List<Account> ingelogdeGebruikers;
+    private List<HostInfo> agendaHosts;
 
     private AccountConnection accountConn;
     private AgendaConnection agendaConn;
@@ -42,6 +43,7 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
         accountConn = new AccountConnection();
         agendaConn = new AgendaConnection();
         agendaItemConn = new AgendaItemConnection();
+        agendaHosts = new ArrayList<>();
     }
 
     /**
@@ -278,6 +280,26 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
     @Override
     public int registreerGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public HostInfo getAgendaHost(int agendaId) throws RemoteException {
+        for(HostInfo host : agendaHosts){
+            if(host.getAgendaId() == agendaId){
+                return host;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void setAgendaHost(HostInfo hostInfo) throws RemoteException {
+        for(HostInfo host : agendaHosts){
+            if(host.getAgendaId() == hostInfo.getAgendaId()){
+                agendaHosts.remove(host);
+            }
+        }
+        agendaHosts.add(hostInfo);
     }
 
 }

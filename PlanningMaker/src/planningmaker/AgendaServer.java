@@ -7,6 +7,7 @@ package planningmaker;
 
 import classes.agenda.Agenda;
 import classes.AgendaHost;
+import classes.HostInfo;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
@@ -31,9 +32,10 @@ public class AgendaServer extends Thread{
 
     // References to registry and Grand Exchange
     private Registry registry = null;
-    private AgendaHost host = null;
+    private AgendaHost agendaHost = null;
+    private HostInfo hostInfo = null;
     
-    public AgendaServer(int agendaid) {
+    public AgendaServer(int agendaid) throws UnknownHostException {
         this.agendaid = agendaid;
         System.out.println(agendaid);
         int length = String.valueOf(agendaid).length();
@@ -45,7 +47,8 @@ public class AgendaServer extends Thread{
             String id = Integer.toString(agendaid);
             portNumber = Integer.parseInt("2"+id.substring(id.length() - 3));
         }
-        
+        InetAddress localhost = InetAddress.getLocalHost();
+        hostInfo = new HostInfo(agendaid, localhost.getHostAddress(), portNumber);
         // Print port number for registry
         System.out.println("Agenda: Port number " + portNumber);
 
@@ -57,7 +60,7 @@ public class AgendaServer extends Thread{
         // Create Grand Exchange
         System.out.println("agendaid = "+agendaid);
         try {
-            host = new AgendaHost(agendaid);
+            agendaHost = new AgendaHost(agendaid, hostInfo);
         } catch (RemoteException ex) {
             Logger.getLogger(AgendaServer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -76,7 +79,7 @@ public class AgendaServer extends Thread{
 
         // Bind Grand Exchange using registry
         try {
-            registry.rebind(bindingName, host);
+            registry.rebind(bindingName, agendaHost);
         } catch (RemoteException ex) {
             System.out.println("Agenda: Cannot bind Agenda");
             System.out.println("Agenda: RemoteException: " + ex.getMessage());
@@ -84,7 +87,7 @@ public class AgendaServer extends Thread{
         try {
             InetAddress localhost = InetAddress.getLocalHost();
             System.out.println("Server: IP Address: " + localhost.getHostAddress());
-            // Just in case this host has multiple IP addresses....
+            // Just in case this agendaHost has multiple IP addresses....
             InetAddress[] allMyIps;
 
             allMyIps = InetAddress.getAllByName(localhost.getCanonicalHostName());

@@ -5,17 +5,22 @@
  */
 package controllers;
 
+import classes.HostInfo;
 import planningmaker.AgendaServer;
 import classes.agenda.Agenda;
 import classes.agenda.AgendaItem;
 import classes.agenda.Event;
 import classes.agenda.Taak;
+import fontyspublisher.IRemotePropertyListener;
 import interfaces.ILoggedIn;
 import interfaces.ILookAgenda;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,7 +56,7 @@ import planningmaker.RegistryManager;
  *
  * @author Lesley Peters
  */
-public class MainController implements Initializable {
+public class MainController extends UnicastRemoteObject implements Initializable, IRemotePropertyListener {
 
     @FXML
     private Button btTest;
@@ -81,11 +86,15 @@ public class MainController implements Initializable {
     private ILoggedIn loggedin;
     private ILookAgenda lookagenda;
 
+    public MainController() throws RemoteException{
+        
+    }
+    
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)  {
         // TODO
     }
 
@@ -194,16 +203,42 @@ public class MainController implements Initializable {
         }
     }
 
-    public void openGedeeldeAgenda() {
-        AgendaServer agendaServer = new AgendaServer(4);
-        agendaServer.start();       
+    public void openGedeeldeAgenda() throws RemoteException, UnknownHostException {
+        int index = lvGedeeldeAgendas.getSelectionModel().getSelectedIndex();
+        Agenda agenda = RM.getAccount().getGedeeldeAgendas().get(index);
+        HostInfo host = loggedin.getAgendaHost(agenda.getId());
+        if(host != null){
+            this.ARM = new AgendaRegistryManager(host.getIp(),host.getPortNumber());
+            ARM.getLookAgendaInterface();
+            this.lookagenda = ARM.getLookAgenda();
+            try{
+                Agenda gedeeldeagenda = lookagenda.agendaInladen();
+                lookagenda.subscribe(this, "agenda");
+                System.out.println("Agenda: " + gedeeldeagenda.getNaam() + " ontvangen van de agenda server.");
+            }catch(Exception ex){
+                AgendaServer agendaServer = new AgendaServer(agenda.getId());
+            agendaServer.start();
+            }
+            
+        }else{
+            AgendaServer agendaServer = new AgendaServer(agenda.getId());
+            agendaServer.start();
+            //openGedeeldeAgenda();
+        }
+             
     }
     
     public void Connect() throws RemoteException{
-        this.ARM = new AgendaRegistryManager("192.168.178.39",2004);
-        ARM.getLookAgendaInterface();
-        this.lookagenda = ARM.getLookAgenda();
-        Agenda agenda = lookagenda.agendaInladen();
-        System.out.println("Agenda: " + agenda.getNaam() + " ontvangen van de agenda server.");
+        
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+        try {
+            Agenda agenda = (Agenda) evt.getNewValue();
+            System.out.println("Agenda ontvangen van agenda server: " + agenda.getNaam());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

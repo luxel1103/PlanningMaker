@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="controllers.GedeeldeAgendaController">
+<AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GedeeldeAgendaController">
   <children>
     <Button id="btnGedeeldeAgendaAanmaken" fx:id="btnGebruikerToevoegen" layoutX="505.0" layoutY="328.0" mnemonicParsing="false" onAction="#gebruikerToevoegen" text="Toevoegen" />
-    <Label id="lblError" layoutX="15.0" layoutY="282.0" prefHeight="17.0" prefWidth="568.0" textFill="#ff0707" />
+    <Label id="lblError" fx:id="lblError" layoutX="15.0" layoutY="282.0" prefHeight="17.0" prefWidth="568.0" textFill="#ff0707" />
     <Button fx:id="btnAddTaak" layoutX="14.0" layoutY="239.0" mnemonicParsing="false" onAction="#addTaak" prefHeight="25.0" prefWidth="167.0" text="Taak toevoegen" />
     <Button fx:id="btnAddEvent" layoutX="215.0" layoutY="239.0" mnemonicParsing="false" onAction="#addEvent" prefHeight="25.0" prefWidth="167.0" text="Event toevoegen" />
     <ListView id="lvTakenEnEvents" fx:id="lvAgendaItems" layoutX="14.0" layoutY="30.0" prefHeight="200.0" prefWidth="568.0" />

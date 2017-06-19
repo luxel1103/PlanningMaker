@@ -26,6 +26,7 @@ public class AccountConnection {
 
     // SQL codes
     static final String GET_FROM_USER_BYLOGININFO = "SELECT * FROM ACCOUNT WHERE gebruikersnaam = ? and wachtwoord = ?";
+    static final String GET_ACCOUNT_ID_BY_NAME = "SELECT id FROM ACCOUNT WHERE gebruikersnaam = ?";
 //    static final String GET_FROM_USER_BYUSERNAME = "SELECT * FROM user WHERE BINARY username = ?";
 //    static final String GET_FROM_USER_ID = "SELECT * FROM user WHERE id = ?";
 //    static final String SET_USER_NEW = "INSERT INTO user(username, password, alias, email, verified, imageURL, saldo) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -67,6 +68,32 @@ public class AccountConnection {
         }
 
         return account;
+    }
+
+    public int getAccount(String gebruikersnaam) {
+        int accountid = 0;
+        try {
+            conn.getConnection();
+            myConn = conn.getMyConn();
+            pstmt = myConn.prepareStatement(GET_ACCOUNT_ID_BY_NAME);
+            pstmt.setString(1, gebruikersnaam);
+
+            myRs = pstmt.executeQuery();
+            myRs.next();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            accountid = myRs.getInt("id");
+            conn.closeConnection();
+        } catch (SQLException ex) {
+            System.out.println("User not found");
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            conn.closeConnection();
+        }
+
+        return accountid;
     }
 
 }

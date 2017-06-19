@@ -3,13 +3,38 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.WelcomeController">
+<AnchorPane id="AnchorPane" prefHeight="344.0" prefWidth="434.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.WelcomeController">
    <children>
-      <TextField fx:id="tbGebruikersnaam" layoutX="68.0" layoutY="188.0" text="lesley" />
-      <TextField fx:id="tbWachtwoord" layoutX="68.0" layoutY="237.0" text="wachtwoord" />
-      <Button fx:id="btInloggen" layoutX="68.0" layoutY="285.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="149.0" text="Inloggen" />
-      <Label fx:id="lblError" layoutX="40.0" layoutY="351.0" prefHeight="17.0" prefWidth="517.0" textFill="RED" />
+      <TextField fx:id="tbGebruikersnaam" layoutX="48.0" layoutY="181.0" prefHeight="29.0" prefWidth="140.0" text="lesley" />
+      <TextField fx:id="tbWachtwoord" layoutX="48.0" layoutY="226.0" prefHeight="29.0" prefWidth="140.0" text="wachtwoord" />
+      <Button fx:id="btInloggen" layoutX="48.0" layoutY="276.0" mnemonicParsing="false" onAction="#login" prefHeight="29.0" prefWidth="140.0" text="Inloggen" />
+      <Label fx:id="lblError" layoutX="14.0" layoutY="319.0" prefHeight="17.0" prefWidth="405.0" textFill="RED" />
+      <ImageView fitHeight="108.0" fitWidth="101.0" layoutX="66.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/icons/agendaicon.png" />
+         </image>
+      </ImageView>
+      <Line endY="280.0" layoutX="220.0" layoutY="22.0" strokeMiterLimit="100.0" />
+      <TextField fx:id="tbRegistreerGebruikersnaam" layoutX="248.0" layoutY="94.0" prefHeight="29.0" prefWidth="140.0" promptText="Gebruikersnaam" />
+      <TextField fx:id="tbRegistreerEmailAdres" layoutX="248.0" layoutY="138.0" prefHeight="29.0" prefWidth="140.0" promptText="Email adres" />
+      <TextField fx:id="tbRegistreerWachtwoord" layoutX="248.0" layoutY="181.0" prefHeight="29.0" prefWidth="140.0" promptText="Wachtwoord" />
+      <TextField fx:id="tbRegistreerWachtwoordOpnieuw" layoutX="248.0" layoutY="226.0" prefHeight="29.0" prefWidth="140.0" promptText="Wachtwoord opnieuw" />
+      <Button fx:id="btnAanmelden" layoutX="248.0" layoutY="276.0" mnemonicParsing="false" onAction="#aanmelden" prefHeight="29.0" prefWidth="140.0" text="Aanmelden" />
+      <Label layoutX="268.0" layoutY="45.0" text="Aanmelden">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="77.0" layoutY="130.0" text="Inloggen">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

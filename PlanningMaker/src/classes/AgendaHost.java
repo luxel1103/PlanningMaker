@@ -60,8 +60,8 @@ public class AgendaHost extends UnicastRemoteObject implements ILookAgenda, IAcc
     }
 
     @Override
-    public boolean addAccount(int gebruikersId) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean addAccount(String gebruikersnaam) throws RemoteException {
+        return agendaInterface.addAccount(agenda.getId(), gebruikersnaam);
     }
 
     @Override

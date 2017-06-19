@@ -37,6 +37,16 @@ public class WelcomeController implements Initializable {
     @FXML
     Button btInloggen;
     @FXML
+    private TextField tbRegistreerGebruikersnaam;
+    @FXML
+    private TextField tbRegistreerEmailAdres;
+    @FXML
+    private TextField tbRegistreerWachtwoord;
+    @FXML
+    private TextField tbRegistreerWachtwoordOpnieuw;
+    @FXML
+    private Button btnAanmelden;
+    @FXML
     Label lblError;
 
     private Account account;
@@ -82,6 +92,10 @@ public class WelcomeController implements Initializable {
             System.out.println("inloggen is mislukt");
             lblError.setText(" Onze poging om je in te loggen is mislukt. Controleer je inloggegevens en probeer het opnieuw.");
         }
+    }
+    
+    public void aanmelden(){
+        System.out.println(tbRegistreerGebruikersnaam.getText() + " " + tbRegistreerWachtwoord.getText() + " " + tbRegistreerWachtwoordOpnieuw.getText());
     }
 
 }

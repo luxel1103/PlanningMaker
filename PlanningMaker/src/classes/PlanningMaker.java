@@ -292,4 +292,21 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
         System.out.println("Agenda met id: " + hostInfo.getAgendaId() + " word gehost door: " + hostInfo.getIp() + " op poort nummer: " + hostInfo.getPortNumber());
     }
 
+    @Override
+    public boolean addAgendaItem(AgendaItem item) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean addAccount(int agendaId, String gebruikersnaam) throws RemoteException {
+        int gebruikersId = accountConn.getAccount(gebruikersnaam);
+        boolean result = false;
+        if(gebruikersId != 0){
+            result = agendaConn.LidToevoegenAanGedeeldeAgenda(agendaId, gebruikersId, true, true);
+        }else {
+            return false;
+        }
+        return result;
+    }
+
 }

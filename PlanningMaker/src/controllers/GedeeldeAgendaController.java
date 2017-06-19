@@ -60,6 +60,8 @@ public class GedeeldeAgendaController extends UnicastRemoteObject implements Ini
     private TextField tbGebruikersnaam;
     @FXML
     private Button btnGebruikerToevoegen;
+    @FXML
+            private Label lblError;
 
     RegistryManager RM;
     AgendaRegistryManager ARM;
@@ -84,7 +86,11 @@ public class GedeeldeAgendaController extends UnicastRemoteObject implements Ini
         this.ARM = new AgendaRegistryManager(host.getIp(), host.getPortNumber());
         ARM.getLookAgendaInterface();
         this.lookagenda = ARM.getLookAgenda();
+        ARM.getAccesAgendaInterface();
+        this.accesagenda = ARM.getAccesAgenda();
+        
         this.agenda = lookagenda.agendaInladen();
+        
         try {
             lookagenda.subscribe(this, "agenda");
             System.out.println("Kan nu changes ontvangen van de agenda server.");
@@ -117,8 +123,20 @@ public class GedeeldeAgendaController extends UnicastRemoteObject implements Ini
 
     }
 
-    public void gebruikerToevoegen() {
-
+    public void gebruikerToevoegen() throws RemoteException {
+        if(tbGebruikersnaam.getText().equalsIgnoreCase("")){
+            lblError.setText("Er is geen gebruikersnaam ingevuld.");
+        }else{
+            if(accesagenda != null){
+                if(accesagenda.addAccount(tbGebruikersnaam.getText())){
+                    lblError.setText(tbGebruikersnaam.getText() + " is toegevoegd aan de agenda.");
+                }else{
+                    lblError.setText("Het is ons niet gelukt om de gebruiker toe te voegen aan de agenda.");
+                }
+            }else{
+                lblError.setText("Je hebt geen rechten om een nieuwe gebruiker uit te nodigen.");
+            }
+        }
     }
 
     @Override

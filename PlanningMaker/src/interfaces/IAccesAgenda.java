@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
  */
 public interface IAccesAgenda extends Remote {
 
-    boolean addAccount(int gebruikersId) throws RemoteException;
+    boolean addAccount(String gebruikersnaam) throws RemoteException;
 
     boolean removeAccount(int gebruikersId) throws RemoteException;
 

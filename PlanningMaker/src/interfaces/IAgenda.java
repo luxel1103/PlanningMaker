@@ -7,6 +7,7 @@ package interfaces;
 
 import classes.HostInfo;
 import classes.agenda.Agenda;
+import classes.agenda.AgendaItem;
 import classes.agenda.Comment;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -20,6 +21,10 @@ public interface IAgenda extends Remote {
     void setAgendaHost(HostInfo host) throws RemoteException;
 
     Agenda getGedeeldeAgenda(int agendaId) throws RemoteException;
+    
+    boolean addAccount(int agendaId, String gebruikersnaam) throws RemoteException;
+    
+    boolean addAgendaItem(AgendaItem item) throws RemoteException;
 
     boolean addComment(int agendaId, Comment comment) throws RemoteException;
 

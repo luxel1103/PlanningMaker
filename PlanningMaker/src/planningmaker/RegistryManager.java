@@ -41,7 +41,7 @@ public class RegistryManager {
     // References to registry and Grand Exchange
     private Registry registry = null;
     private InetAddress localhost;
-    private String ipAddress = "192.168.126.1";
+    private String ipAddress = "192.168.178.39";
 
     public RegistryManager() {
         //getLocalHostIp();

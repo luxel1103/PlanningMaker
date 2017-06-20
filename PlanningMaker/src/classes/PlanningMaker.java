@@ -8,6 +8,7 @@ package classes;
 import classes.agenda.Agenda;
 import classes.agenda.AgendaItem;
 import classes.agenda.Comment;
+import classes.agenda.GedeeldeAgenda;
 import database.AccountConnection;
 import database.AgendaConnection;
 import database.AgendaItemConnection;
@@ -219,13 +220,36 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
         try {
             List<AgendaItem> items = agendaItemConn.getAgendaItems(agendaid);
             agenda.addAgendaItems(items);
-            return agenda;
         } catch (Exception ex) {
             System.out.println("Het toevoegen van agendaitems voor de agenda met id: " + agendaid + " is mislukt");
             System.out.println(ex.getMessage());
             Logger.getLogger(PlanningMaker.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+        
+        //toevoegen van de leden aan de gedeelde agenda
+        try {
+            List<Integer> gebruikerids = accountConn.getAccountIds(agendaid);
+            List<Account> accounts = new ArrayList<>();
+            for(int id : gebruikerids){
+                Account account = accountConn.getAccountById(id);
+                accounts.add(account);
+            }
+            if(accounts.size() > 0){
+                GedeeldeAgenda gedeeldeAgenda = (GedeeldeAgenda) agenda;
+                gedeeldeAgenda.setLeden(accounts);
+                return gedeeldeAgenda;
+            }else{
+                System.out.println("Geen leden gevonden voor de gedeelde agenda met id: " + agendaid);
+                return null;
+            }
+        } catch (Exception ex) {
+            System.out.println("Het toevoegen van gebruikers aan de gedeelde agenda met id: " + agendaid + " is mislukt");
+            System.out.println(ex.getMessage());
+            Logger.getLogger(PlanningMaker.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        
     }
 
     @Override

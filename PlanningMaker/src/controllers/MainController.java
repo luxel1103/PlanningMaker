@@ -180,43 +180,49 @@ public class MainController implements Initializable {
     }
 
     public void openGedeeldeAgenda() throws RemoteException, UnknownHostException, IOException, InterruptedException {
-        int index = lvGedeeldeAgendas.getSelectionModel().getSelectedIndex();
-        Agenda agenda = RM.getAccount().getGedeeldeAgendas().get(index);
-        HostInfo host = loggedin.getAgendaHost(agenda.getId());
-        if (host != null) {
-            
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GedeeldeAgenda.fxml"));
-        Parent root = loader.load();
-        GedeeldeAgendaController controller = (GedeeldeAgendaController) loader.getController();
-        controller.setUp(RM, host);
-        Stage inputStage = new Stage();
-        Scene newScene = new Scene(root);
-        inputStage.setScene(newScene);
-        inputStage.setTitle("Planning Maker - " + RM.getAccount().getGebruikersnaam());
-        inputStage.show();
-            
+        int index = -1;
+        try {
+            index = lvGedeeldeAgendas.getSelectionModel().getSelectedIndex();
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            System.out.println("Geen gedeelde agenda geselecteerd.");
+        }
+        if (index != -1) {
+            lvGedeeldeAgendas.getSelectionModel().getSelectedIndex();
+            Agenda agenda = RM.getAccount().getGedeeldeAgendas().get(index);
+            HostInfo host = loggedin.getAgendaHost(agenda.getId());
+            if (host != null) {
 
-
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GedeeldeAgenda.fxml"));
+                Parent root = loader.load();
+                GedeeldeAgendaController controller = (GedeeldeAgendaController) loader.getController();
+                controller.setUp(RM, host);
+                Stage inputStage = new Stage();
+                Scene newScene = new Scene(root);
+                inputStage.setScene(newScene);
+                inputStage.setTitle("Planning Maker - " + RM.getAccount().getGebruikersnaam());
+                inputStage.show();
+            } else {
+                AgendaServer agendaServer = new AgendaServer(agenda.getId());
+                agendaServer.start();
+                sleep(2000);
+                openGedeeldeAgenda();
+            }
         } else {
-            AgendaServer agendaServer = new AgendaServer(agenda.getId());
-            agendaServer.start();
-            sleep(2000);
-            openGedeeldeAgenda();
+            lblError.setText("Geen gedeelde agenda geselecteerd.");
         }
 
     }
 
     public void uitloggen() throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Welcome.fxml"));
-            Parent root = loader.load();
-            Stage inputStage = new Stage();
-            Scene newScene = new Scene(root);
-            inputStage.setScene(newScene);
-            inputStage.setTitle("Planning Maker");
-            inputStage.show();
-            Stage stage = (Stage) lblWelkom.getScene().getWindow();
-            stage.close();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Welcome.fxml"));
+        Parent root = loader.load();
+        Stage inputStage = new Stage();
+        Scene newScene = new Scene(root);
+        inputStage.setScene(newScene);
+        inputStage.setTitle("Planning Maker");
+        inputStage.show();
+        Stage stage = (Stage) lblWelkom.getScene().getWindow();
+        stage.close();
     }
 
-    
 }

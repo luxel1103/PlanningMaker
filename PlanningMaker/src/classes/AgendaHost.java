@@ -49,7 +49,6 @@ public class AgendaHost extends UnicastRemoteObject implements ILookAgenda, IAcc
 
     @Override
     public Agenda agendaInladen() throws RemoteException {
-
         return this.agenda;
     }
 
@@ -70,8 +69,15 @@ public class AgendaHost extends UnicastRemoteObject implements ILookAgenda, IAcc
     }
 
     @Override
-    public boolean addAgendaItem(AgendaItem item) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateAgenda() throws RemoteException {
+        Agenda nieuweagenda = agendaInterface.getGedeeldeAgenda(agenda.getId());
+        if (nieuweagenda != null) {
+            agenda = nieuweagenda;
+            System.out.println("Gedeelde agenda: " + agenda.getNaam() + " is opgehaald van de server.");
+            rp.inform("agenda", null, this.agenda);
+        } else {
+            System.out.println("gedeelde agenda kon niet worden opgehaald");
+        }
     }
 
     @Override

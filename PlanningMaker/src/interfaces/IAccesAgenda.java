@@ -19,7 +19,7 @@ public interface IAccesAgenda extends Remote {
 
     boolean removeAccount(int gebruikersId) throws RemoteException;
 
-    boolean addAgendaItem(AgendaItem item) throws RemoteException;
+    void updateAgenda() throws RemoteException;
 
     boolean removeAgendaItem(int itemId) throws RemoteException;
 

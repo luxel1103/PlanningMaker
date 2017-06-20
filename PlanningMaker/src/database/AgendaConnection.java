@@ -37,8 +37,6 @@ public class AgendaConnection {
     static final String ADD_AGENDA_ITEM = "INSERT INTO AGENDAITEM(agendaid, naam, beschrijving, begintijd, eindtijd) VALUES (?,?,?,?,?)";
     static final String ADD_GEDEELDE_AGENDA = "INSERT INTO AGENDA(isgedeeld, naam) VALUES (?,?)";
     static final String ADD_LID = "INSERT INTO AGENDA_LEDEN(agendaid, gebruikersid, istoegevoegd, rechten) VALUES (?,?,?,?)";
-
-    // SQL codes
     static final String GET_GEDEELDE_AGENDA_IDS = "SELECT agendaid FROM AGENDA_LEDEN WHERE gebruikersid = ?";
 
     public List<Integer> getGedeeldeAgendaIds(int gebruikersid) {

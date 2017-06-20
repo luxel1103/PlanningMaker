@@ -21,5 +21,13 @@ public class GedeeldeAgenda extends Agenda {
     public GedeeldeAgenda(int id, String naam) {
         super(id, naam);
     }
+    
+    public void setLeden(List<Account> leden){
+        this.leden = leden;
+    }
+    
+    public List<Account> getLeden(){
+        return this.leden;
+    }
 
 }

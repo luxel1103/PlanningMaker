@@ -6,6 +6,7 @@
 package controllers;
 
 import classes.agenda.AgendaItem;
+import interfaces.IAccesAgenda;
 import interfaces.ILoggedIn;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -21,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import planningmaker.AgendaRegistryManager;
 import planningmaker.RegistryManager;
 
 /**
@@ -60,8 +62,11 @@ public class AddAgendaItemController implements Initializable {
     private Label lblEventLabel2;
 
     private RegistryManager RM;
+    private AgendaRegistryManager ARM;
     private ILoggedIn loggedin;
+    private IAccesAgenda accesAgenda;
     private String type;
+    private int agendaid;
 
     /**
      * Initializes the controller class.
@@ -76,6 +81,27 @@ public class AddAgendaItemController implements Initializable {
         this.RM = RM;
         this.loggedin = RM.getLoggedIn();
         this.type = type;
+        this.agendaid = RM.getAccount().getPriveAgendaId();
+        if (type.equals("taak")) {
+            lblToevoegen.setText("Taak toevoegen");
+            lblBeginTijd.setVisible(false);
+            dtpBeginTijd.setVisible(false);
+            tbBeginTijdUur.setVisible(false);
+            tbBeginTijdMinuut.setVisible(false);
+            lblEventLabel1.setVisible(false);
+            lblEventLabel2.setVisible(false);
+        } else {
+            lblToevoegen.setText("Event toevoegen");
+        }
+    }
+    
+    public void setUp(AgendaRegistryManager ARM, RegistryManager RM, String type, int agendaid) throws RemoteException {
+        this.RM = RM;
+        this.loggedin = RM.getLoggedIn();
+        this.ARM = ARM;
+        this.accesAgenda = ARM.getAccesAgenda();
+        this.type = type;
+        this.agendaid = agendaid;
         if (type.equals("taak")) {
             lblToevoegen.setText("Taak toevoegen");
             lblBeginTijd.setVisible(false);
@@ -90,8 +116,6 @@ public class AddAgendaItemController implements Initializable {
     }
 
     public void addAgendaItem() throws ParseException, RemoteException {
-        int agendaId = RM.getAccount().getPriveAgendaId();
-        AgendaItem nieuwItem = null;
         if (type.equals("taak")) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
             String eindTijdJaar = Integer.toString(dtpEindTijd.getValue().getYear());
@@ -101,7 +125,10 @@ public class AddAgendaItemController implements Initializable {
             String eindTijdMinuut = tbEindTijdMinuut.getText();
             String dateInString = eindTijdDag + "-" + eindTijdMaand + "-" + eindTijdJaar + " " + eindTijdUur + ":" + eindTijdMinuut + ":00";
             Date eindtijd = sdf.parse(dateInString);
-            if (loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), null, eindtijd, type)) {
+            if (loggedin.agendaItemToevoegen(agendaid, tbNaam.getText(), tbBeschrijving.getText(), null, eindtijd, type)) {
+                if(accesAgenda != null){
+                    accesAgenda.updateAgenda();
+                }
                 Stage stage = (Stage) tbNaam.getScene().getWindow();
                 stage.close();
             } else {
@@ -125,7 +152,10 @@ public class AddAgendaItemController implements Initializable {
             String eindTijdMinuut = tbEindTijdMinuut.getText();
             String dateInStringEind = eindTijdDag + "-" + eindTijdMaand + "-" + eindTijdJaar + " " + eindTijdUur + ":" + eindTijdMinuut + ":00";
             Date eindtijd = sdfEind.parse(dateInStringEind);
-            if (loggedin.agendaItemToevoegen(agendaId, tbNaam.getText(), tbBeschrijving.getText(), begintijd, eindtijd, type)) {
+            if (loggedin.agendaItemToevoegen(agendaid, tbNaam.getText(), tbBeschrijving.getText(), begintijd, eindtijd, type)) {
+                if(accesAgenda != null){
+                    accesAgenda.updateAgenda();
+                }
                 Stage stage = (Stage) tbNaam.getScene().getWindow();
                 stage.close();
             } else {

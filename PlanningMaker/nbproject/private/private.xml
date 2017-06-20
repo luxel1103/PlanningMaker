@@ -5,6 +5,13 @@
         <group>
             <file>file:/C:/Users/Admin/Desktop/PlanningMaker/PlanningMaker/src/database/AccountConnection.java</file>
             <file>file:/C:/Users/Admin/Desktop/PlanningMaker/PlanningMaker/src/controllers/WelcomeController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/PlanningMaker/PlanningMaker/src/planningmaker/RegistryManager.java</file>
+            <file>file:/C:/Users/Admin/Desktop/PlanningMaker/PlanningMaker/src/classes/Account.java</file>
+            <file>file:/C:/Users/Admin/Desktop/PlanningMaker/PlanningMaker/src/interfaces/IVisitor.java</file>
+            <file>file:/C:/Users/Admin/Desktop/PlanningMaker/PlanningMaker/src/classes/PlanningMaker.java</file>
+            <file>file:/C:/Users/Admin/Desktop/PlanningMaker/PlanningMaker/src/controllers/MainController.java</file>
+            <file>file:/C:/Users/Admin/Desktop/PlanningMaker/PlanningMaker/src/database/Connection.java</file>
+            <file>file:/C:/Users/Admin/Desktop/PlanningMaker/PlanningMaker/src/database/AgendaConnection.java</file>
         </group>
     </open-files>
 </project-private>

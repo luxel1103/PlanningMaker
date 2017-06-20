@@ -1,37 +1,55 @@
-## Welcome to GitHub Pages
+# Planning Maker
+## GSO Killer App
 
-You can use the [editor on GitHub](https://github.com/luxel1103/PlanningMaker/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Planning Maker is een Java applicatie gemaakt door Lesley Peters, ter oplevering voor het vak GSO31 aan de Fontys Hogeschool Eindhoven.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Deze applicatie maakt het mogelijk voor gebruikers om een privé agenda aan te maken en te beheren door er taken en afspraken (events) aan toe te voegen.
 
-### Markdown
+Daarnaast biedt deze applicatie de mogelijkheid om samen met andere gebruikers "Gedeelde agenda's" aan te maken waardoor ze samen taken en afspraken kunnen maken en beheren.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Om de communicatie tussen de server, clients en agenda hosters mogelijk te maken is er gebruik gemaakt van RMI (pull). Daarnaast gebruikt deze applicatie ook de library "FontysPublisher" (aangeboden door Fontys) die het mogelijk maakt om veranderingen aan een agenda te pushen naar verschillende clients die hierop geabboneerd zijn.
 
+### Om te beginnen
+Deze instructies zullen ervoor zorgen dat je een kopie van deze applicatie kunt maken en uitvoeren op je eigen lokale pc voor development en testing doeleinden.
+
+### Voorwaarden
+Het volgende heb je nodig om deze applicatie te kunnen aanmaken
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+- Een mysql database (indien nodig de jdbc driver voor het maken van de connectie)
+- Een Code Editor (Deze applicatie is gemaakt in NetBeans)
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Installatie
+Allereerst moet er een mysql database worden aangemaakt
+```markdown
+Dit kan gedaan worden door het create script "PlanningMakerDatabase.sql" uit te voeren in je eigen mysql database.
+```
 
-### Jekyll Themes
+Als de database aangemaakt is moet in de klasse "Connection" de connection string en de database user + password worden meegegeven, dit kan als volgt gedaan worden:
+```markdown
+    private final String connectionString = "jdbc:mysql://vserver213.axc.nl:3306/lesleya213_gso?zeroDateTimeBehavior=convertToNull";
+    private final String dbUser = "gebruikersnaam";
+    private final String dbPass = "wachtwoord";
+    
+    Allereerst dien je je eigen connection string in te vullen om een connectie te maken naar je eigen database, daarna moet je de gebruikersnaam en wachtwoord meegeven ter verificatie.
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/luxel1103/PlanningMaker/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Nu kan het ip adres van de server ingevoerd worden zodat de clients met de server kunnen verbinden.
+Het IP adres kan aangepast worden in de klasse "RegistryManager"
+```markdown
+verander: 
+String ipAddress = "127.0.0.1";
+naar het ip adres van de server.
 
-### Support or Contact
+Indien je de applicatie op 1 machiene wilt testen, zorg er dan voor dat de regel (te vinden in de constructor van RegistryManager):
+getLocalHostIp();
+niet uitgecomment is, deze methode zal je locale ip adres ophalen en gebruiken om een connectie mee te maken.
+Wil je de server op een externe pc laten draaien, zorg er dan juist wel voor dat deze regel uitgecomment is:
+//getLocalHostIp();
+```
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+### Auteur
+- Lesley Peters - Ontwerp & Ontwikkeling van de applicatie
+
+### Support of Contact
+Heb je vragen of aanvullingen? Stuur me dan gerust een berichtje naar mijn schoolmail: lesley.peters@student.fontys.nl

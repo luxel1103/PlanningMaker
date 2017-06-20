@@ -41,10 +41,10 @@ public class RegistryManager {
     // References to registry and Grand Exchange
     private Registry registry = null;
     private InetAddress localhost;
-    private String ipAddress = "localhost";
+    private String ipAddress = "192.168.126.1";
 
     public RegistryManager() {
-        getLocalHostIp();
+        //getLocalHostIp();
         setupRegistry();
     }
 

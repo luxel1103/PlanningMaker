@@ -41,7 +41,7 @@ public class RegistryManager {
     // References to registry and Grand Exchange
     private Registry registry = null;
     private InetAddress localhost;
-    private String ipAddress = "192.168.178.39";
+    private String ipAddress = "83.81.143.204";
 
     public RegistryManager() {
         //getLocalHostIp();
@@ -140,6 +140,7 @@ public class RegistryManager {
 
         // Locate registry at IP address and port number
         try {
+            System.out.println("Trying to connect to ip: " + ipAddress + ":" + portNumber);
             registry = LocateRegistry.getRegistry(ipAddress, portNumber);
 
             if (registry != null) {

@@ -267,11 +267,6 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    //IVisitor methodes
-    @Override
-    public ILoggedIn login(int id, String gebruikersnaam, String wachtwoord) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public Account getGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException {
@@ -329,11 +324,6 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
         }
         agendaHosts.add(hostInfo);
         System.out.println("Agenda met id: " + hostInfo.getAgendaId() + " word gehost door: " + hostInfo.getIp() + " op poort nummer: " + hostInfo.getPortNumber());
-    }
-
-    @Override
-    public boolean addAgendaItem(AgendaItem item) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -114,8 +114,4 @@ public class Account implements Serializable {
     public List<Agenda> getGedeeldeAgendas() {
         return this.gedeeldeAgendas;
     }
-
-    public void removeGedeeldeAgenda(Agenda agenda) {
-        gedeeldeAgendas.remove(agenda);
-    }
 }

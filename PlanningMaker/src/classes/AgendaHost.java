@@ -52,12 +52,6 @@ public class AgendaHost extends UnicastRemoteObject implements ILookAgenda, IAcc
     }
 
     @Override
-    public boolean agendaOpslaan(Agenda agenda) throws RemoteException {
-        rp.inform("agenda", null, this.agenda);
-        return true;
-    }
-
-    @Override
     public boolean addAccount(String gebruikersnaam) throws RemoteException {
         return agendaInterface.addAccount(agenda.getId(), gebruikersnaam);
     }

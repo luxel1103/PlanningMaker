@@ -23,8 +23,6 @@ public interface IAgenda extends Remote {
     Agenda getGedeeldeAgenda(int agendaId) throws RemoteException;
     
     boolean addAccount(int agendaId, String gebruikersnaam) throws RemoteException;
-    
-    boolean addAgendaItem(AgendaItem item) throws RemoteException;
 
     boolean addComment(int agendaId, Comment comment) throws RemoteException;
 

@@ -15,15 +15,6 @@ import java.rmi.RemoteException;
  */
 public interface IVisitor extends Remote {
 
-    /**
-     *
-     * @param id gebruikers id voor van het account dat word ingelogd
-     * @param gebruikersnaam gebruikersnaam van het account dat word ingelogd
-     * @param wachtwoord wachtwoord van het account dat word ingelogd
-     * @return ILoggedIn interface
-     * @throws RemoteException
-     */
-    ILoggedIn login(int id, String gebruikersnaam, String wachtwoord) throws RemoteException;
 
     /**
      *

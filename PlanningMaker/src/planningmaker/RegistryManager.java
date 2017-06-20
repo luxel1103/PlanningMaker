@@ -44,7 +44,7 @@ public class RegistryManager {
     private String ipAddress = "83.81.143.204";
 
     public RegistryManager() {
-        //getLocalHostIp();
+        getLocalHostIp();
         setupRegistry();
     }
 

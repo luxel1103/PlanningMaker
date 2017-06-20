@@ -32,7 +32,6 @@ public class AgendaHost extends UnicastRemoteObject implements ILookAgenda, IAcc
     public AgendaHost(int agendaid, HostInfo hostInfo) throws RemoteException {
         rp = new RemotePublisher();
         rp.registerProperty("agenda");
-
         RM = new RegistryManager();
         RM.getAgendaInterface();
         this.hostInfo = hostInfo;

@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author Lesley Peters
  */
-public class PlanningMakerServer {
+public class PlanningMakerServer  {
 
     // Set port number
     private static final int portNumber = 1099;

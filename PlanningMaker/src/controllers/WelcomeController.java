@@ -67,11 +67,30 @@ public class WelcomeController implements Initializable {
     public void login() throws RemoteException, IOException {
         try {
             account = visitor.getGebruiker(tbGebruikersnaam.getText(), tbWachtwoord.getText());
-            System.out.print(account);
+            openMain();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
+    }
+
+    public void aanmelden() {
+        if (tbRegistreerGebruikersnaam.getText().equalsIgnoreCase("") || tbRegistreerWachtwoord.getText().equalsIgnoreCase("") || tbRegistreerWachtwoordOpnieuw.getText().equalsIgnoreCase("")) {
+            lblError.setText("Alle velden moeten ingevuld zijn om een account aan te maken.");
+        } else if (tbRegistreerWachtwoord.getText().equalsIgnoreCase(tbRegistreerWachtwoordOpnieuw.getText())) {
+            try {
+                account = visitor.registreerGebruiker(tbRegistreerGebruikersnaam.getText(), tbRegistreerWachtwoord.getText());
+                openMain();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            lblError.setText("De opgegeven wachtwoorden komen niet met elkaar overeen, probeer het opnieuw.");
+        }
+
+    }
+
+    public void openMain() throws IOException {
         if (account != null) {
             RM.setAccount(account);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Main.fxml"));
@@ -92,10 +111,6 @@ public class WelcomeController implements Initializable {
             System.out.println("inloggen is mislukt");
             lblError.setText(" Onze poging om je in te loggen is mislukt. Controleer je inloggegevens en probeer het opnieuw.");
         }
-    }
-    
-    public void aanmelden(){
-        System.out.println(tbRegistreerGebruikersnaam.getText() + " " + tbRegistreerWachtwoord.getText() + " " + tbRegistreerWachtwoordOpnieuw.getText());
     }
 
 }

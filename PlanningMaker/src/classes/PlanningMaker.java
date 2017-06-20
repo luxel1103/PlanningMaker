@@ -181,7 +181,7 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
 
     @Override
     public boolean gedeeldeAgendaAanmaken(int gebruikersid, String naam) throws RemoteException {
-        int agendaid = agendaConn.addGedeeldeAgenda(naam);
+        int agendaid = agendaConn.addGedeeldeAgenda(naam,1);
         if (agendaid != 0) {
             return agendaConn.LidToevoegenAanGedeeldeAgenda(agendaid, gebruikersid, true, true);
         } else {
@@ -261,14 +261,29 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
             System.out.println(ex.getMessage());
             return null;
         }
-
-        System.out.println("Gebruiker: " + account.getGebruikersnaam() + " is succesvol ingelogd");
         return account;
     }
 
     @Override
-    public int registreerGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Account registreerGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException {
+        int accountid = accountConn.getAccount(gebruikersnaam);
+        if(accountid == 0){
+            int agendaid = agendaConn.addGedeeldeAgenda("prive", 0);
+            if(agendaid != 0){
+                if(accountConn.registreerAccount(gebruikersnaam, wachtwoord, agendaid)){
+                return accountConn.getAccount(gebruikersnaam, wachtwoord);
+            }else{
+                System.out.println("Kon gebruiker met gebruikersnaam: " + gebruikersnaam + " niet registreren");
+                return null;
+            }
+            }else{
+                System.out.println("Kon geen agenda aanmaken voor gebruiker: " + gebruikersnaam);
+                return null;
+            }
+        }else{
+            System.out.println("Er bestaat al een gebruiker met de gebruikersnaam: " + gebruikersnaam);
+            return null;
+        }
     }
 
     @Override

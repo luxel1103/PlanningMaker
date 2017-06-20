@@ -50,8 +50,6 @@ import planningmaker.RegistryManager;
 public class MainController implements Initializable {
 
     @FXML
-    private Button btTest;
-    @FXML
     private Label lblError;
     @FXML
     private Button btnAddTaak;
@@ -146,14 +144,6 @@ public class MainController implements Initializable {
         }, 0, 10000);
     }
 
-    public void button() throws RemoteException {
-        RM.getAccount().setPriveAgenda(loggedin.getPriveAgenda(RM.getAccount().getPriveAgendaId()));
-        System.out.println("Todo voor gebruiker: " + RM.getAccount().getGebruikersnaam());
-        for (AgendaItem item : RM.getAccount().getPriveAgenda().getAgendaItems()) {
-            System.out.println(item.getNaam() + " -> " + item.getBeschrijving());
-        }
-    }
-
     public void addTaak() throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AddAgendaItem.fxml"));
@@ -216,8 +206,16 @@ public class MainController implements Initializable {
 
     }
 
-    public void Connect() throws RemoteException {
-
+    public void uitloggen() throws IOException {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Welcome.fxml"));
+            Parent root = loader.load();
+            Stage inputStage = new Stage();
+            Scene newScene = new Scene(root);
+            inputStage.setScene(newScene);
+            inputStage.setTitle("Planning Maker");
+            inputStage.show();
+            Stage stage = (Stage) lblWelkom.getScene().getWindow();
+            stage.close();
     }
 
     

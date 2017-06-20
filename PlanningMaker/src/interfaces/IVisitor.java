@@ -43,5 +43,5 @@ public interface IVisitor extends Remote {
      * registreren mislukt is
      * @throws RemoteException
      */
-    int registreerGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException;
+     Account registreerGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException;
 }

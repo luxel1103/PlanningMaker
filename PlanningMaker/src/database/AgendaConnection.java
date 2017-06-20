@@ -146,12 +146,12 @@ public class AgendaConnection {
 
     }
 
-    public int addGedeeldeAgenda(String agendaNaam) {
+    public int addGedeeldeAgenda(String agendaNaam, int isgedeeld) {
         conn.getConnection();
         try {
 
             pstmt = conn.getMyConn().prepareStatement(ADD_GEDEELDE_AGENDA, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setInt(1, 1);
+            pstmt.setInt(1, isgedeeld);
             pstmt.setString(2, agendaNaam);
 
             if (pstmt.executeUpdate() > 0) {

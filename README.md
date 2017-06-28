@@ -1,4 +1,4 @@
-﻿# Planning Maker
+﻿## Planning Maker
 ## GSO Killer App
 
 Planning Maker is een Java applicatie gemaakt door Lesley Peters, ter oplevering voor het vak GSO31 aan de Fontys Hogeschool Eindhoven.

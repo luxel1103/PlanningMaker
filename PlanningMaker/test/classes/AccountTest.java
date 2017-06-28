@@ -72,12 +72,25 @@ public class AccountTest {
      * Test of setPriveAgendaId method, of class Account.
      */
     @Test
-    public void testSetPriveAgendaId() {
+    public void testSetPriveAgendaIdCorrect() {
         System.out.println("setPriveAgendaId");
         int priveAgendaId = 2;
         Account instance = testaccount;
         instance.setPriveAgendaId(priveAgendaId);
         int expResult = 2;
+        int result = instance.getPriveAgendaId();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of setPriveAgendaId while id is negative.
+     */
+    public void testSetPriveAgendaIdIncorrect(){
+        System.out.println("setPriveAgendaId");
+        int priveAgendaId = -1;
+        Account instance = testaccount;
+        instance.setPriveAgendaId(priveAgendaId);
+        int expResult = 1;
         int result = instance.getPriveAgendaId();
         assertEquals(expResult, result);
     }
@@ -104,6 +117,20 @@ public class AccountTest {
         Account instance = testaccount;
         instance.setGebruikersnaam(gebruikersnaam);
         String expResult = "lesleypeters";
+        String result = instance.getGebruikersnaam();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of setGebruikersnaam method, of class Account with an empty string
+     */
+    @Test
+    public void testSetGebruikersnaamIncorrect() {
+        System.out.println("setGebruikersnaamIncorrect");
+        String gebruikersnaam = "";
+        Account instance = testaccount;
+        instance.setGebruikersnaam(gebruikersnaam);
+        String expResult = "lesley";
         String result = instance.getGebruikersnaam();
         assertEquals(expResult, result);
     }
@@ -142,8 +169,23 @@ public class AccountTest {
         System.out.println("setPriveAgenda");
         Agenda agenda = new PriveAgenda(2,"prive");
         Account instance = testaccount;
+        instance.setPriveAgendaId(agenda.getId());
         instance.setPriveAgenda(agenda);
         int expResult = agenda.getId();
+        int result = instance.getPriveAgenda().getId();
+        assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of setPriveAgenda method, of class Account with someone elses prive agenda id
+     */
+    @Test
+    public void testSetPriveAgendaIncorrect() {
+        System.out.println("setPriveAgenda");
+        Agenda agenda = new PriveAgenda(2,"prive");
+        Account instance = testaccount;
+        instance.setPriveAgenda(agenda);
+        int expResult = testpriveagenda.getId();
         int result = instance.getPriveAgenda().getId();
         assertEquals(expResult, result);
     }

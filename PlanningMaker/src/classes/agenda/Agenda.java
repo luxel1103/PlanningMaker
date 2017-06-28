@@ -27,6 +27,8 @@ public class Agenda implements Serializable {
         this.id = id;
         this.naam = naam;
         agendaItems = new ArrayList<>();
+        gedeeldeItems = new ArrayList<>();
+        tijdEnDatum = new Date();
     }
 
     /**
@@ -44,16 +46,8 @@ public class Agenda implements Serializable {
      * @return the value of tijdEnDatum
      */
     public Date getTijdEnDatum() {
+        tijdEnDatum = new Date();
         return tijdEnDatum;
-    }
-
-    /**
-     * Set the value of tijdEnDatum
-     *
-     * @param tijdEnDatum new value of tijdEnDatum
-     */
-    public void setTijdEnDatum(Date tijdEnDatum) {
-        this.tijdEnDatum = tijdEnDatum;
     }
 
     public String getNaam() {

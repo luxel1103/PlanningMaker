@@ -18,7 +18,10 @@ import java.util.logging.Logger;
  */
 public class Connection {
 
+    //Connection string voor de database
     private final String connectionString = "jdbc:mysql://vserver213.axc.nl:3306/lesleya213_gso?zeroDateTimeBehavior=convertToNull";
+    //Connection string voor de test database voor het testen van de interface tests
+    //private final String connectionString = "jdbc:mysql://vserver213.axc.nl:3306/lesleya213_gsotest?zeroDateTimeBehavior=convertToNull";
     private final String dbUser = "lesleya213_gso";
     private final String dbPass = "wachtwoord";
 

@@ -67,14 +67,14 @@ public class AgendaRegistryManager {
     public void getLookAgendaInterface() {
         if (registry != null) {
             try {
-                System.out.println("Trying to lookup Visitor Interface...");
+                System.out.println("Trying to lookup LookAgenda Interface...");
                 lookagenda = (ILookAgenda) registry.lookup(bindingName);
                 System.out.println("Interface reference IS bound.");
 
                 this.lookagenda = lookagenda;
 
             } catch (RemoteException | NotBoundException ex) {
-                System.out.println("Client: Cannot bind Visitor interface");
+                System.out.println("Client: Cannot bind LookAgenda interface");
                 System.out.println("Client: RemoteException: " + ex.getMessage());
                 System.out.println("Interface reference is NOT bound");
                 lookagenda = null;
@@ -86,14 +86,14 @@ public class AgendaRegistryManager {
     public void getAccesAgendaInterface() {
         if (registry != null) {
             try {
-                System.out.println("Trying to lookup Visitor Interface...");
+                System.out.println("Trying to lookup AccesAgenda Interface...");
                 accesagenda = (IAccesAgenda) registry.lookup(bindingName);
                 System.out.println("Interface reference IS bound.");
 
                 this.accesagenda = accesagenda;
 
             } catch (RemoteException | NotBoundException ex) {
-                System.out.println("Client: Cannot bind Visitor interface");
+                System.out.println("Client: Cannot bind AccesAgenda interface");
                 System.out.println("Client: RemoteException: " + ex.getMessage());
                 System.out.println("Interface reference is NOT bound");
                 accesagenda = null;

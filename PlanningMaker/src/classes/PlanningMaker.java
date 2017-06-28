@@ -182,7 +182,7 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
 
     @Override
     public boolean gedeeldeAgendaAanmaken(int gebruikersid, String naam) throws RemoteException {
-        int agendaid = agendaConn.addGedeeldeAgenda(naam,1);
+        int agendaid = agendaConn.addGedeeldeAgenda(naam, 1);
         if (agendaid != 0) {
             return agendaConn.LidToevoegenAanGedeeldeAgenda(agendaid, gebruikersid, true, true);
         } else {
@@ -226,20 +226,20 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
             Logger.getLogger(PlanningMaker.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        
+
         //toevoegen van de leden aan de gedeelde agenda
         try {
             List<Integer> gebruikerids = accountConn.getAccountIds(agendaid);
             List<Account> accounts = new ArrayList<>();
-            for(int id : gebruikerids){
+            for (int id : gebruikerids) {
                 Account account = accountConn.getAccountById(id);
                 accounts.add(account);
             }
-            if(accounts.size() > 0){
+            if (accounts.size() > 0) {
                 GedeeldeAgenda gedeeldeAgenda = (GedeeldeAgenda) agenda;
                 gedeeldeAgenda.setLeden(accounts);
                 return gedeeldeAgenda;
-            }else{
+            } else {
                 System.out.println("Geen leden gevonden voor de gedeelde agenda met id: " + agendaid);
                 return null;
             }
@@ -249,7 +249,7 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
             Logger.getLogger(PlanningMaker.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        
+
     }
 
     @Override
@@ -266,7 +266,6 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
     public boolean verlaatAgenda(int gebruikersId, int agendaId) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 
     @Override
     public Account getGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException {
@@ -286,20 +285,20 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
     @Override
     public Account registreerGebruiker(String gebruikersnaam, String wachtwoord) throws RemoteException {
         int accountid = accountConn.getAccount(gebruikersnaam);
-        if(accountid == 0){
+        if (accountid == 0) {
             int agendaid = agendaConn.addGedeeldeAgenda("prive", 0);
-            if(agendaid != 0){
-                if(accountConn.registreerAccount(gebruikersnaam, wachtwoord, agendaid)){
-                return accountConn.getAccount(gebruikersnaam, wachtwoord);
-            }else{
-                System.out.println("Kon gebruiker met gebruikersnaam: " + gebruikersnaam + " niet registreren");
-                return null;
-            }
-            }else{
+            if (agendaid != 0) {
+                if (accountConn.registreerAccount(gebruikersnaam, wachtwoord, agendaid)) {
+                    return accountConn.getAccount(gebruikersnaam, wachtwoord);
+                } else {
+                    System.out.println("Kon gebruiker met gebruikersnaam: " + gebruikersnaam + " niet registreren");
+                    return null;
+                }
+            } else {
                 System.out.println("Kon geen agenda aanmaken voor gebruiker: " + gebruikersnaam);
                 return null;
             }
-        }else{
+        } else {
             System.out.println("Er bestaat al een gebruiker met de gebruikersnaam: " + gebruikersnaam);
             return null;
         }
@@ -330,9 +329,9 @@ public class PlanningMaker extends UnicastRemoteObject implements ILoggedIn, IAg
     public boolean addAccount(int agendaId, String gebruikersnaam) throws RemoteException {
         int gebruikersId = accountConn.getAccount(gebruikersnaam);
         boolean result = false;
-        if(gebruikersId != 0){
+        if (gebruikersId != 0) {
             result = agendaConn.LidToevoegenAanGedeeldeAgenda(agendaId, gebruikersId, true, true);
-        }else {
+        } else {
             return false;
         }
         return result;

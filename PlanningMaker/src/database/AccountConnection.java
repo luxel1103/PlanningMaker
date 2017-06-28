@@ -9,6 +9,7 @@ import classes.Account;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -32,6 +33,29 @@ public class AccountConnection {
     static final String GET_ACCOUNT_ID_BY_NAME = "SELECT id FROM ACCOUNT WHERE gebruikersnaam = ?";
     static final String SET_ACCOUNT_NEW = "INSERT INTO ACCOUNT(gebruikersnaam, wachtwoord, priveagendaid) VALUES (?, ?, ?)";
     static final String GET_ACCOUNT_IDS = "SELECT gebruikersid FROM AGENDA_LEDEN WHERE agendaid = ?";
+
+    public void clearDatabase() {
+        System.out.println("!!! DATABASE AAN HET LEEGMAKEN !!!");
+        try {
+            conn.getConnection();
+            Statement _deleteTableDtataStmt = conn.getMyConn().createStatement();
+            String _deleteTableData = "TRUNCATE TABLE ACCOUNT";
+            _deleteTableDtataStmt.executeUpdate(_deleteTableData);
+            _deleteTableData = "TRUNCATE TABLE AGENDA";
+            _deleteTableDtataStmt.executeUpdate(_deleteTableData);
+            _deleteTableData = "TRUNCATE TABLE AGENDAITEM";
+            _deleteTableDtataStmt.executeUpdate(_deleteTableData);
+            _deleteTableData = "TRUNCATE TABLE AGENDA_LEDEN";
+            _deleteTableDtataStmt.executeUpdate(_deleteTableData);
+            _deleteTableData = "TRUNCATE TABLE COMMENT";
+            _deleteTableDtataStmt.executeUpdate(_deleteTableData);
+            System.out.println("!!! DATABASE SUCCESVOL LEEGGEHAALD !!!");
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     public List<Integer> getAccountIds(int agendaid) {
 
@@ -70,7 +94,7 @@ public class AccountConnection {
 
         return gebruikerids;
     }
-    
+
     public Account getAccount(String gebruikersnaam, String wachtwoord) {
         Account account = null;
         int priveAgendaId = 0;
@@ -101,7 +125,7 @@ public class AccountConnection {
 
         return account;
     }
-    
+
     public Account getAccountById(int gebruikersid) {
         Account account = null;
         int priveAgendaId = 0;
@@ -117,7 +141,7 @@ public class AccountConnection {
             System.out.println(ex.getMessage());
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try { 
+        try {
             String naam = myRs.getString("gebruikersnaam");
             String pass = myRs.getString("wachtwoord");
             priveAgendaId = myRs.getInt("priveagendaid");
@@ -158,31 +182,30 @@ public class AccountConnection {
     }
 
     public boolean registreerAccount(String gebruikersnaam, String wachtwoord, int agendaid) {
-        
 
-                try {
-                    conn.getConnection();
-                    myConn = conn.getMyConn();
-                    pstmt = myConn.prepareStatement(SET_ACCOUNT_NEW);
-                    pstmt.setString(1, gebruikersnaam);
-                    pstmt.setString(2, wachtwoord);
-                    pstmt.setInt(3, agendaid);
+        try {
+            conn.getConnection();
+            myConn = conn.getMyConn();
+            pstmt = myConn.prepareStatement(SET_ACCOUNT_NEW);
+            pstmt.setString(1, gebruikersnaam);
+            pstmt.setString(2, wachtwoord);
+            pstmt.setInt(3, agendaid);
 
-                    if (pstmt.executeUpdate() > 0) {
-                        System.out.println("Account geregistreerd met gebruikersnaam: " + gebruikersnaam);
-                        return true;
-                    } else {
-                        System.out.println("Gebruiker aan database toevoegen is mislukt.");
-                        return false;
-                    }
-                } catch (SQLException ex) {
-                    System.out.println("failed to register new user. SQLException");
-                    Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-                    ex.printStackTrace();
-                    return false;
-                }finally{
-                    conn.closeConnection();                    
-                }
+            if (pstmt.executeUpdate() > 0) {
+                System.out.println("Account geregistreerd met gebruikersnaam: " + gebruikersnaam);
+                return true;
+            } else {
+                System.out.println("Gebruiker aan database toevoegen is mislukt.");
+                return false;
+            }
+        } catch (SQLException ex) {
+            System.out.println("failed to register new user. SQLException");
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            return false;
+        } finally {
+            conn.closeConnection();
+        }
     }
-    
+
 }

@@ -1,4 +1,4 @@
-# Planning Maker
+﻿# Planning Maker
 ## GSO Killer App
 
 Planning Maker is een Java applicatie gemaakt door Lesley Peters, ter oplevering voor het vak GSO31 aan de Fontys Hogeschool Eindhoven.
@@ -46,6 +46,16 @@ getLocalHostIp();
 niet uitgecomment is, deze methode zal je locale ip adres ophalen en gebruiken om een connectie mee te maken.
 Wil je de server op een externe pc laten draaien, zorg er dan juist wel voor dat deze regel uitgecomment is:
 //getLocalHostIp();
+```
+
+Voor het testen van de interfaces word de gehele database leeggemaakt! Houd hier rekening me en zorg dat je hiervoor een apparte test database aanmaakt, verander daarna ook de connection string in de Connection klasse.
+```markdown
+    //private final String connectionString = "jdbc:mysql://vserver213.axc.nl:3306/lesleya213_gso?zeroDateTimeBehavior=convertToNull";
+    private final String connectionString = "jdbc:mysql://vserver213.axc.nl:3306/lesleya213_gso?zeroDateTimeBehavior=convertToNull";
+    private final String dbUser = "gebruikersnaam";
+    private final String dbPass = "wachtwoord";
+    
+    Zorg ervoor dat je de normale database connection string uitcomment en de connection string van de test database gebruikt tijdens het testen van de interfaces.
 ```
 
 ### Auteur
